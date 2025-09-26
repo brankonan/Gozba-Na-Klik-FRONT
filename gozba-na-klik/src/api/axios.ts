@@ -1,3 +1,11 @@
+import axios from "axios";
+
+
+const api = axios.create({
+  baseURL: "https://localhost:7256/api", 
+});
+
+export default api;
 
 // src/api/axios.ts
 import axios from "axios";
