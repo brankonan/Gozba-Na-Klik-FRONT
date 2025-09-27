@@ -18,7 +18,7 @@ function App() {
       <Route path="/courier/schedule" element={<Courier />} />
       <Route path="/employee/orders" element={<Employee />} />
       <Route path="/owner" element={<Owner />} />
-      <Route path="/profile/Id" element={<Customer />} />
+      <Route path="/profile/:id" element={<Customer />} />
       <Route path="/admin" element={<Admin />} />
     </Routes>
   );
