@@ -4,7 +4,7 @@ const Employee = () => {
 
     return (
         <>
-            <h1>Wellcome employee</h1>
+            <h1>Welcome employee</h1>
         </>
     )
 }

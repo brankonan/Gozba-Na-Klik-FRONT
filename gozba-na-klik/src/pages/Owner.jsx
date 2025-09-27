@@ -5,7 +5,7 @@ const Owner = () => {
 
     return (
         <>
-            <h1>Wellcome owner</h1>
+            <h1>Welcome owner</h1>
         </>
     )
 }

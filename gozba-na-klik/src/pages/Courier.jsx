@@ -4,7 +4,7 @@ const Courier = () => {
 
     return (
         <>
-            <h1>Wellcome courier</h1>
+            <h1>Welcome courier</h1>
         </>
     )
 }

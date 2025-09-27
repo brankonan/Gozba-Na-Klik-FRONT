@@ -5,7 +5,7 @@ const Customer = () => {
 
     return (
         <>
-            <h1>Wellcome customer</h1>
+            <h1>Welcome customer</h1>
         </>
     )
 }

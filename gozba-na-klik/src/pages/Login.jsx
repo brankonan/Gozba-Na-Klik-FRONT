@@ -13,7 +13,7 @@ const Login = () => {
             const user = await loginAsync(email, password);
             localStorage.setItem("user", JSON.stringify(user))
 
-            switch (user.Role) {
+            switch (user.role) {
                 case "Admin":
                     navigate("/admin");
                     break;
@@ -68,7 +68,7 @@ const Login = () => {
                 placeholder="Password"
             />
 
-            <button type="submit">Login</button>
+            <button type="submit" onSubmit={handleSubmit}>Login</button>
             <button type="button" onClick={() => navigate("/")}>Back</button>
         </form>
     );

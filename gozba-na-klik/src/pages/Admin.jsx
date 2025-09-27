@@ -4,7 +4,7 @@ const Admin = () => {
 
     return(
         <>
-            <h1>Wellcome admin</h1>
+            <h1>Welcome admin</h1>
         </>
     )
 }
