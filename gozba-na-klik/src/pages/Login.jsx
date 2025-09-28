@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginAsync } from "../api/authService"
+import { loginAsync } from "../api/authService";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const navigate = useNavigate();
+    // const [email, setEmail] = useState("");
+    // const [password, setPassword] = useState("");
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const navigate = useNavigate();
+    const { register, handleSubmit, formState: { errors } } = useForm();
+
+    const handleLogin = async (data) => {
         try {
+            const { email, password } = data;
             const user = await loginAsync(email, password);
             localStorage.setItem("user", JSON.stringify(user))
 
@@ -51,24 +54,24 @@ const Login = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(handleLogin)}>
             <h2>LOGIN</h2>
 
             <input
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-                type="email"
+                {...register("email", { required: "Obavezno polje" })}
                 placeholder="Email"
+                type="email"
             />
+            {errors.email && <p>{errors.email.message}</p>}
 
             <input
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-                type="password"
+                {...register("password", { required: "Obavezno polje" })}
                 placeholder="Password"
+                type="password"
             />
+            {errors.password && <p>{errors.password.message}</p>}
 
-            <button type="submit" onSubmit={handleSubmit}>Login</button>
+            <button type="submit">Login</button>
             <button type="button" onClick={() => navigate("/")}>Back</button>
         </form>
     );
