@@ -9,7 +9,6 @@ import Employee from "./pages/Employee";
 import Owner from "./pages/Owner";
 import Customer from "./pages/Customer";
 import Courier from "./pages/Courier";
-import AdminUsers from "./pages/admin/AdminUsers";
 
 function App() {
   return (
