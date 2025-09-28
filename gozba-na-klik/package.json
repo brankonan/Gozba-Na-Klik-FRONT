@@ -16,6 +16,7 @@
     "react-router-dom": "^7.9.2"
   },
   "devDependencies": {
+    "sass-embedded": "^1.93.2",
     "vite": "^6.2.0"
   }
 }

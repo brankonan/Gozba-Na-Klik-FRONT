@@ -30,12 +30,14 @@ export default function Register() {
 
   const onSubmit = async (data) => {
     try {
-      const { firstName, lastName, email, password } = data;
-      await api.post("/auth/register", {
+      const { firstName, lastName, username, email, password, confirmPassword } = data;
+      await api.post("/Auth/register", {
         firstName,
         lastName,
+        username,
         email,
         password,
+        confirmPassword
       });
       navigate("/login");
     } catch (e) {
@@ -71,6 +73,18 @@ export default function Register() {
               />
               {errors.lastName && (
                 <span className="error">{errors.lastName.message}</span>
+              )}
+            </div>
+
+            <div>
+              <label className="label">Username</label>
+              <input
+                className="input"
+                {...register("username", { required: "Obavezno polje" })}
+                placeholder="npr. Debilovanovic"
+              />
+              {errors.lastName && (
+                <span className="error">{errors.username.message}</span>
               )}
             </div>
 
