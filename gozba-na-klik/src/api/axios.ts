@@ -1,27 +1,25 @@
 import axios from "axios";
 
-
 const api = axios.create({
-  baseURL: "https://localhost:7256/api", 
+  baseURL: "https://localhost:7256/api",
 });
 
 export default api;
 
-// src/api/axios.ts
-import axios from "axios";
+// import axios from "axios";
 
-const api = axios.create({
-  baseURL: "/api",
-  headers: { "Content-Type": "application/json" },
-});
+// const api = axios.create({
+//   baseURL: "/api",
+//   headers: { "Content-Type": "application/json" },
+// });
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("auth_token");
-  if (token) {
-    config.headers = config.headers ?? {};
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+// api.interceptors.request.use((config) => {
+//   const token = localStorage.getItem("auth_token");
+//   if (token) {
+//     config.headers = config.headers ?? {};
+//     config.headers.Authorization = `Bearer ${token}`;
+//   }
+//   return config;
+// });
 
-export default api;   // 👈 OVO dodaj
+// export default api;

@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/index.scss";
 
 // import { useForm } from "react-hook-form";
 // import { useNavigate, Link } from "react-router-dom";
@@ -12,14 +13,14 @@ import React from "react";
 
 //   const onSubmit = async (data) => {
 //     try {
-//       const res = await api.post("/auth/login", data); // očekuje token 
+//       const res = await api.post("/auth/login", data); // očekuje token
 //       const token = res?.data?.token;
 //       if (!token) {
 //         alert("Prijava neuspešna (token nedostaje).");
 //         return;
 //       }
 //       localStorage.setItem("auth_token", token);
-//       navigate("/"); 
+//       navigate("/");
 //     } catch {
 //       alert("Pogrešan username ili lozinka.");
 //     }
@@ -58,8 +59,6 @@ import React from "react";
 //   );
 // }
 
-const Login = () => {
-
-}
+const Login = () => {};
 
 export default Login;
