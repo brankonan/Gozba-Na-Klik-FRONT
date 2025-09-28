@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Welcome from "./pages/Welcome";
 import Admin from "./pages/admin/Admin";
+import AdminUsers from "./pages/admin/AdminUsers";
 import Employee from "./pages/Employee";
 import Owner from "./pages/Owner";
 import Customer from "./pages/Customer";
