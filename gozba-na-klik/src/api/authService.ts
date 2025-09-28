@@ -1,6 +1,6 @@
 import { NavigateFunction } from "react-router-dom";
 import api from "./axios";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 
 export const loginAsync = async (email: string, password: string) => {
