@@ -1,44 +1,49 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "../../styles/index.scss";
 
 const Admin = () => {
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-    return(
-        <div>
-            <nav style={{ background: "#333", padding: "1rem", color: "#fff" }}> 
-                <button onClick={() => setOpen(!open)} 
-                    style={{ 
-                        background: "transparent", 
-                        border: "none", 
-                        color: "white", 
-                        fontSize: "1.2rem", 
-                        cursor: "pointer" 
-                    }}
-                >
-                    ☰ Menu
-                </button>
-
-                {open && (
-                    <ul style={{ 
-                        listStyle: "none", 
-                        margin: 0, 
-                        padding: "0.5rem", 
-                        background: "#444", 
-                        position: "absolute"
-                    }}>
-                        <li>
-                            <Link to="/admin/users" style={{ color: "white" }}>View users</Link>
-                        </li>
-                    </ul>
-                )}
-            </nav>
-            <div style={{ padding: "2rem", textAlign: "center" }}>
-                <h1>Admin panel</h1>
-                <p>Choose your option above.</p>
-            </div>
+  return (
+    <div>
+      <header className="navbar">
+        <div className="navbar-inner">
+          <div style={{ fontWeight: 800 }}>Admin·Panel</div>
+          <button
+            className="btn btn-outline btn-sm"
+            onClick={() => setOpen((v) => !v)}
+            aria-haspopup="menu"
+            aria-expanded={open}
+          >
+            ☰ Menu
+          </button>
         </div>
-    ) 
-}
+        {open && (
+          <nav className="container" style={{ position: "relative" }}>
+            <ul
+              className="menu"
+              role="menu"
+              aria-label="Admin menu"
+              style={{ position: "absolute" }}
+            >
+              <li>
+                <Link to="/admin/users" role="menuitem">
+                  View users
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        )}
+      </header>
+      <main className="section">
+        <div className="container" style={{ textAlign: "center" }}>
+          <h1 className="h1">Admin panel</h1>
+          <p style={{ opacity: 0.85 }}>Choose your option above.</p>
+        </div>
+      </main>
+    </div>
+  );
+};
 
 export default Admin;

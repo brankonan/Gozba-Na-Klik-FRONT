@@ -20,6 +20,7 @@ function App() {
       <Route path="/owner" element={<Owner />} />
       <Route path="/profile/:id" element={<Customer />} />
       <Route path="/admin" element={<Admin />} />
+      <Route path="/admin/users" element={<AdminUsers />} />
     </Routes>
   );
 }
