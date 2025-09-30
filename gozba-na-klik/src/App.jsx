@@ -9,6 +9,7 @@ import Employee from "./pages/Employee";
 import Owner from "./pages/Owner";
 import Customer from "./pages/Customer";
 import Courier from "./pages/Courier";
+import AdminRestaurants from "./pages/admin/AdminRestaurants";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Route path="/profile/:id" element={<Customer />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin/users" element={<AdminUsers />} />
+      <Route path="/admin/restaurants" element={<AdminRestaurants/>} />
     </Routes>
   );
 }

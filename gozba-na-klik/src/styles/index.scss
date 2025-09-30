@@ -44,14 +44,18 @@ p{margin:0 0 12px}
     align-items:center;
     padding:12px 16px}
 .menu{
+  min-width: 180px;
   list-style:none;
   padding:8px;
-  margin:8px 0 0;
+  margin:0;
   background:rgba(15,22,35,.8);
   border:1px solid #253044;
   border-radius:12px;
   box-shadow:0 12px 28px rgba(0,0,0,.35);
-  backdrop-filter:blur(4px)
+  backdrop-filter:blur(4px);
+  position: absolute;   
+  top: 100%;            
+  right: 0;    
 }
 .menu a{display:block;
     padding:8px 12px;
