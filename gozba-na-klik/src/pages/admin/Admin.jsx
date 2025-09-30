@@ -10,32 +10,35 @@ const Admin = () => {
       <header className="navbar">
         <div className="navbar-inner">
           <div style={{ fontWeight: 800 }}>Admin·Panel</div>
-          <button
-            className="btn btn-outline btn-sm"
-            onClick={() => setOpen((v) => !v)}
-            aria-haspopup="menu"
-            aria-expanded={open}
-          >
-            ☰ Menu
-          </button>
-        </div>
-        {open && (
-          <nav className="container" style={{ position: "relative" }}>
-            <ul
-              className="menu"
-              role="menu"
-              aria-label="Admin menu"
-              style={{ position: "absolute" }}
+
+          <div style={{ position: "relative" }}>
+            <button
+              className="btn btn-outline btn-sm"
+              onClick={() => setOpen((v) => !v)}
+              aria-haspopup="menu"
+              aria-expanded={open}
             >
-              <li>
-                <Link to="/admin/users" role="menuitem">
-                  View users
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        )}
+              ☰ Menu
+            </button>
+
+            {open && (
+              <ul className="menu" role="menu" aria-label="Admin menu">
+                <li>
+                  <Link to="/admin/users" role="menuitem">
+                    View users
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/admin/restaurants" role="menuitem">
+                    View restaurants
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </div>
+        </div>
       </header>
+
       <main className="section">
         <div className="container" style={{ textAlign: "center" }}>
           <h1 className="h1">Admin panel</h1>
