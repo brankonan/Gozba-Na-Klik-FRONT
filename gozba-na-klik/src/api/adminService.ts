@@ -11,6 +11,13 @@ interface CreateUserDto {
   role: "Courier" | "RestaurantOwner";
 }
 
+interface RestaurantForm {
+  name: string;
+  ownerId: number;
+  photo?: string;
+}
+
+//USERS
 export async function getAllUsers() {
     const response = await api.get(userRESOURCE);
     return response.data;
@@ -21,7 +28,20 @@ export async function createUser(data: CreateUserDto) {
   return response.data;
 }
 
+
+//RESTAURANTS
 export async function getAllRestaurants() {
-    const response = await api.get(restaurantRESOURCE);
-    return response.data;
+  const response = await api.get(restaurantRESOURCE);
+  return response.data;
 }
+
+export async function deleteRestaurant(id: number) {
+  const response = await api.delete(`/admin/restaurants/${id}`);
+  return response.data;
+}
+
+export async function updateRestaurant(id: number, data: any) {
+  const response = await api.put(`/admin/restaurants/${id}`, data);
+  return response.data;
+}
+

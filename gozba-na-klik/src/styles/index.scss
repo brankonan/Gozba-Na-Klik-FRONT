@@ -148,3 +148,25 @@ p{margin:0 0 12px}
 .badge-role{background:#0f1520;
     border:1px solid #253044;
     color:#c9d3e3}
+
+.btn-delete {
+  background: #b91c1c; /* tamno crvena */
+  color: #fff;
+  border: 1px solid #7f1d1d; /* tamnija bordura */
+  box-shadow: 0 4px 14px rgba(185,28,28,.25);
+}
+
+.btn-delete:hover {
+  background: #991b1b;
+}
+
+.btn-edit {
+  background: #2563eb; /* tamno plava */
+  color: #fff;
+  border: 1px solid #1e3a8a; /* tamnija bordura */
+  box-shadow: 0 4px 14px rgba(37,99,235,.25);
+}
+
+.btn-edit:hover {
+  background: #1d4ed8;
+}
