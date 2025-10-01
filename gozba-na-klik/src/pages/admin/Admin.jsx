@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/index.scss";
+import UserAvatar from "../../components/UserAvatar";
 
 const Admin = () => {
   const [open, setOpen] = useState(false);
@@ -18,6 +19,7 @@ const Admin = () => {
           >
             ☰ Menu
           </button>
+          <UserAvatar />
         </div>
         {open && (
           <nav className="container" style={{ position: "relative" }}>
