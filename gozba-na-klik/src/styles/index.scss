@@ -44,14 +44,18 @@ p{margin:0 0 12px}
     align-items:center;
     padding:12px 16px}
 .menu{
+  min-width: 180px;
   list-style:none;
   padding:8px;
-  margin:8px 0 0;
+  margin:0;
   background:rgba(15,22,35,.8);
   border:1px solid #253044;
   border-radius:12px;
   box-shadow:0 12px 28px rgba(0,0,0,.35);
-  backdrop-filter:blur(4px)
+  backdrop-filter:blur(4px);
+  position: absolute;   
+  top: 100%;            
+  right: 0;    
 }
 .menu a{display:block;
     padding:8px 12px;
@@ -144,3 +148,26 @@ p{margin:0 0 12px}
 .badge-role{background:#0f1520;
     border:1px solid #253044;
     color:#c9d3e3}
+    
+//dugmiciii ako Petar zeli da se igra da ne bodu oci
+.btn-delete {
+  background: #5a0f0f; 
+  color: #fff;
+  border: 1px solid #7f1d1d; 
+  box-shadow: 0 4px 14px rgba(185,28,28,.25);
+}
+
+.btn-delete:hover {
+  background: #992020;
+}
+
+.btn-edit {
+  background: #0f2962; 
+  color: #fff;
+  border: 1px solid #1e3a8a; 
+  box-shadow: 0 4px 14px rgba(37,99,235,.25);
+}
+
+.btn-edit:hover {
+  background: #133182;
+}
