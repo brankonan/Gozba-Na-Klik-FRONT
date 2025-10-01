@@ -28,6 +28,11 @@ export async function createUser(data: CreateUserDto) {
   return response.data;
 }
 
+// OWNERS za fetchovanje vlasnika restorana
+export async function getAllOwners() {
+  const response = await api.get(`${userRESOURCE}/owners`);
+  return response.data;
+}
 
 //RESTAURANTS
 export async function getAllRestaurants() {
@@ -44,4 +49,10 @@ export async function updateRestaurant(id: number, data: any) {
   const response = await api.put(`/admin/restaurants/${id}`, data);
   return response.data;
 }
+
+export async function createRestaurant(data: RestaurantForm) {
+  const response = await api.post(restaurantRESOURCE, data);
+  return response.data;
+}
+
 
