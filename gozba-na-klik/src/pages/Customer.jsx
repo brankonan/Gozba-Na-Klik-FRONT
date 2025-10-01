@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { uploadUserPhoto, deleteUserPhoto } from "../api/userService";
 import "../styles/index.scss";
@@ -18,8 +18,8 @@ const Customer = () => {
     }
   });
 
-  const [file, setFile] = useStae(null);
-  const [busy, setBusy] = useStae(false);
+  const [file, setFile] = useState(null);
+  const [busy, setBusy] = useState(false);
 
   const previewUrl = useMemo(
     () => (file ? URL.createObjectURL(file) : null),
