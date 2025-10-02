@@ -56,7 +56,7 @@ export const handleLogin = async (navigate: NavigateFunction, data: any) => {
                 break;
 
             case "Customer":
-                navigate(`/profile/${user.Id}`);
+                navigate(`/profile/${user.id}`);
                 break;
 
             default:

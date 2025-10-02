@@ -1,11 +1,24 @@
 import api from "./axios";
-// const RESOURCE = "/";
+
+const RESOURCE = "/users"
+
+export interface UpdateUserDto {
+    firstName: string;
+    lastName: string;
+    email: string;
+    // profilePic: string;
+}
 
 
-//to-do login
+export const updateAsync = async (updateUserDto: UpdateUserDto, id: number) => {
+    //DODATI ADRESU ZA ENDPOINT 
+    const response = await api.put(`/update/${id}`, updateUserDto);
 
+    return response.data;
+}
 
+export const getAllergensAsync = async (id: number) => {
+    const response = await api.put(`/`);
 
-//to-do register
-
-
+    return response.data;
+}
