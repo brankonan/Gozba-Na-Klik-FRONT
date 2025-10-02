@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { updateAsync } from "../api/userService";
+import UploadPhoto from "./UploadPhoto";
 
 const Customer = () => {
     const [user, setUser] = useState(null);
@@ -119,6 +120,7 @@ const Customer = () => {
                                 </div>
                                 {errors.favorites && (<span className="error">{errors.favorites.message}</span>)}
                             </div>
+                            <UploadPhoto/>
 
                             <button type="submit">Azuriraj profil</button>
                         </form>
@@ -128,5 +130,3 @@ const Customer = () => {
         </>
     )
 }
-
-export default Customer
