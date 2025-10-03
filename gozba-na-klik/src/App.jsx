@@ -9,7 +9,6 @@ import Employee from "./pages/Employee";
 import Owner from "./pages/Owner";
 import Customer from "./pages/Customer";
 import Courier from "./pages/Courier";
-import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -18,7 +17,11 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/admin/users" element={<AdminUsers />} />
-      <Route path="/profile" element={<Profile/>} />
+      <Route path="admin/:id" element={<Admin />} />
+      <Route path="profile/:id" element={<Customer />} />
+      <Route path="courier/:id" element={<Courier />} />
+      <Route path="owner/:id" element={<Owner />} />
+      <Route path="employee/:id" element={<Employee />} />
     </Routes>
   );
 }

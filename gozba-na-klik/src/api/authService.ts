@@ -40,19 +40,19 @@ export const handleLogin = async (navigate: NavigateFunction, data: any) => {
 
         switch (user.role) {
             case "Admin":
-                navigate("/admin");
+                navigate(`/admin/${user.id}`);
                 break;
 
             case "Courier":
-                navigate("/courier/schedule");
+                navigate(`/courier/${user.id}`);
                 break;
 
             case "Employee":
-                navigate("/employee/orders");
+                navigate(`/employee/${user.id}`);
                 break;
 
             case "RestaurantOwner":
-                navigate("/owner")
+                navigate(`/owner/${user.id}`)
                 break;
 
             case "Customer":

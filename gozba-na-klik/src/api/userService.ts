@@ -1,19 +1,18 @@
 import api from "./axios";
 
-<<<<<<< HEAD
 const RESOURCE = "/users"
 
 export interface UpdateUserDto {
     firstName: string;
     lastName: string;
     email: string;
-    // profilePic: string;
+    allergens: string[]
 }
 
 
 export const updateAsync = async (updateUserDto: UpdateUserDto, id: number) => {
     //DODATI ADRESU ZA ENDPOINT 
-    const response = await api.put(`/update/${id}`, updateUserDto);
+    const response = await api.put(`${RESOURCE}/${id}`, updateUserDto);
 
     return response.data;
 }
@@ -23,7 +22,7 @@ export const getAllergensAsync = async (id: number) => {
 
     return response.data;
 }
-=======
+
 export async function uploadUserPhoto(userId: number, file: File) {
   const formData = new FormData();
   formData.append("file", file);
@@ -36,4 +35,3 @@ export async function uploadUserPhoto(userId: number, file: File) {
 export async function deleteUserPhoto(userId: number) {
   await api.delete(`/users/${userId}/photo`);
 }
->>>>>>> origin/feature/upload-users-photo
