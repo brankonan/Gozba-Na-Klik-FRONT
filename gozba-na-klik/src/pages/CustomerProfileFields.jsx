@@ -1,5 +1,6 @@
 import React from "react";
 
+// dodatna polja u edit profilu specificna za Role
 const CustomerProfileFields = ({ register, errors }) => {
     
     const allergenCategories = ["Fish", "Peanuts", "Shellfish", "Gluten", "Eggs", "Lactose", "Soy", "Nuts"];

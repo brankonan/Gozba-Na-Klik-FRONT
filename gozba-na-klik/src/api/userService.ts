@@ -18,7 +18,7 @@ export const updateAsync = async (updateUserDto: UpdateUserDto, id: number) => {
 }
 
 export const getAllergensAsync = async (id: number) => {
-    const response = await api.put(`/`);
+    const response = await api.get(`users/${id}/allergens`);
 
     return response.data;
 }
