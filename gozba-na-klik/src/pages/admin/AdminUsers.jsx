@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { getAllUsers, createUser } from "../../api/adminService";
 import "../../styles/index.scss";
+import UserAvatar from "../../components/UserAvatar";
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
@@ -57,6 +58,7 @@ const AdminUsers = () => {
           >
             {showForm ? "Close form" : "Add new user"}
           </button>
+          <UserAvatar />
         </div>
       </header>
 
