@@ -16,12 +16,12 @@ function App() {
       <Route path="/" element={<Welcome />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/courier/schedule" element={<Courier />} />
-      <Route path="/employee/orders" element={<Employee />} />
-      <Route path="/owner" element={<Owner />} />
-      <Route path="/profile/:id" element={<Customer />} />
-      <Route path="/admin" element={<Admin />} />
       <Route path="/admin/users" element={<AdminUsers />} />
+      <Route path="admin/:id" element={<Admin />} />
+      <Route path="profile/:id" element={<Customer />} />
+      <Route path="courier/:id" element={<Courier />} />
+      <Route path="owner/:id" element={<Owner />} />
+      <Route path="employee/:id" element={<Employee />} />
     </Routes>
   );
 }

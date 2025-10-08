@@ -1,31 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/index.scss";
+import Navbar from "./Navbar";
 
 export default function Welcome() {
   const navigate = useNavigate();
   return (
     <>
-      <header className="navbar">
-        <div className="navbar-inner container" style={{ fontWeight: 800 }}>
-          Food·Admin
-        </div>
-        <div className="row">
-          <button
-            className="btn btn-primary"
-            onClick={() => navigate("/login")}
-          >
-            Prijava
-          </button>
-          <button
-            className="btn btn-ghost"
-            onClick={() => navigate("/register")}
-          >
-            Registracija
-          </button>
-        </div>
-      </header>
-
+      <Navbar/>
       <main className="section">
         <div
           className="container card card-pad center"

@@ -1,146 +1,274 @@
-*{box-sizing:border-box}
-html,body,#root{height:100%}
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-  line-height:1.5;
-  background:#0b0f14;
-  color:#e9edf7;
-  transition:background-color .2s,color .2s
+* {
+  box-sizing: border-box
 }
-body::before{
-  content:"";
-  position:fixed;
-  top:0;left:0;right:0;
-  height:70vh;
+
+html,
+body,
+#root {
+  height: 100%
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.5;
+  background: #0b0f14;
+  color: #e9edf7;
+  transition: background-color .2s, color .2s
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70vh;
   background:
-    linear-gradient(0deg,rgba(0,0,0,.45),rgba(0,0,0,.45)),
+    linear-gradient(0deg, rgba(0, 0, 0, .45), rgba(0, 0, 0, .45)),
     url("/src/images/ai-generated-assorted-indian-food-on-dark-wooden-background-free-photo.jpg") center/cover no-repeat;
-  z-index:-1
+  z-index: -1
 }
 
-img{max-width:100%;display:block}
-a{color:#9fd3ff;
-    text-decoration:none;
-    transition:opacity .2s}
-a:hover{opacity:.9}
-h1,h2,h3{margin:0 0 8px}
-p{margin:0 0 12px}
-
-.container{width:min(1100px,100%);
-    margin:0 auto;
-    padding:0 12px}
-.row{display:flex;
-    gap:8px; align-items:center}
-.stack{display:grid;
-    gap:12px}
-.section{padding:16px 0}
-
-.navbar{background:rgba(20,26,35,.85);
-    backdrop-filter:blur(6px);
-    border-bottom:1px solid rgba(255,255,255,.06)}
-.navbar-inner{display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:12px 16px}
-.menu{
-  list-style:none;
-  padding:8px;
-  margin:8px 0 0;
-  background:rgba(15,22,35,.8);
-  border:1px solid #253044;
-  border-radius:12px;
-  box-shadow:0 12px 28px rgba(0,0,0,.35);
-  backdrop-filter:blur(4px)
+img {
+  max-width: 100%;
+  display: block
 }
-.menu a{display:block;
-    padding:8px 12px;
-    border-radius:8px;
-    color:#e9edf7}
-.menu a:hover{background:#0f1726}
 
-.btn{
-  appearance:none;
-  border:1px solid transparent;
-  background:#2a3342;
-  color:#fff;
-  padding:10px 16px;
-  border-radius:10px;
-  font-weight:600;cursor:pointer;
-  transition:transform .12s,opacity .2s,background .2s, border-color .2s
+a {
+  color: #9fd3ff;
+  text-decoration: none;
+  transition: opacity .2s
 }
-.btn:active{transform:translateY(1px)}
-.btn:disabled{opacity:.6;cursor:not-allowed}
 
-.btn-primary{background:#22c55e;
-    box-shadow:0 4px 14px rgba(34,197,94,.25)}
-.btn-primary:hover{background:#16a34a}
-.btn-outline{background:transparent;
-    border-color:#3a465b}
-.btn-outline:hover{background:#141b28}
-.btn-ghost{background:transparent}
-.btn-ghost:hover{background:#121826}
-.btn-sm{padding:8px 12px}
-.btn-lg{padding:12px 18px;
-    border-radius:12px}
-
-.label{font-weight:600;
-    display:inline-block;
-    margin-bottom:6px}
-.input{
-  width:100%;
-  background:rgba(15,22,35,.85);
-  color:#e9edf7;border:1px solid #253044;
-  border-radius:10px;
-  padding:10px 12px;
-  outline:none;
-  transition:border-color .2s,box-shadow .2s,background .2s
+a:hover {
+  opacity: .9
 }
-.input::placeholder{color:#98a3b4}
-.input:focus{border-color:#22c55e; box-shadow:0 0 0 3px rgba(34,197,94,.35);
-    background:#0c1320}
-.help{font-size:12px;
-    opacity:.85}
-.error{color:#ffb4b4;
-    font-size:13px}
 
-.card{
-  background:rgba(15,22,35,.85);
-  border:1px solid #253044;
-  border-radius:12px;
-  backdrop-filter:blur(3px)
+h1,
+h2,
+h3 {
+  margin: 0 0 8px
 }
-.card-pad{padding:16px}
 
-.table-wrap{overflow-x:auto}
-.table{
-  width:100%;
-  border-collapse:collapse;
-  background:rgba(15,22,35,.85);
-  color:#e9edf7;
-  border:1px solid #253044;
-  border-radius:12px;
-  overflow:hidden
+p {
+  margin: 0 0 12px
 }
-.table thead th{
-  text-align:left;
-  font-weight:700;
-  font-size:14px;color:#aab4c3;
-  background:#0c1320;
-  padding:12px 14px;
-  border-bottom:1px solid #253044
+
+.container {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding: 0 12px
 }
-.table tbody td{padding:12px 14px;
-    border-bottom:1px solid #192235}
-.table tbody tr:nth-child(even){background:#0e1522}
-.table tbody tr:hover{background:#121c2d}
+
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center
+}
+
+.stack {
+  display: grid;
+  gap: 12px
+}
+
+.section {
+  padding: 16px 0
+}
+
+.navbar {
+  background: rgba(20, 26, 35, .85);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255, 255, 255, .06)
+}
+
+.navbar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px
+}
+
+.menu {
+  list-style: none;
+  padding: 8px;
+  margin: 8px 0 0;
+  background: rgba(15, 22, 35, .8);
+  border: 1px solid #253044;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .35);
+  backdrop-filter: blur(4px)
+}
+
+.menu a {
+  display: block;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: #e9edf7
+}
+
+.menu a:hover {
+  background: #0f1726
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid transparent;
+  background: #2a3342;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .12s, opacity .2s, background .2s, border-color .2s
+}
+
+.btn:active {
+  transform: translateY(1px)
+}
+
+.btn:disabled {
+  opacity: .6;
+  cursor: not-allowed
+}
+
+.btn-primary {
+  background: #22c55e;
+  box-shadow: 0 4px 14px rgba(34, 197, 94, .25)
+}
+
+.btn-primary:hover {
+  background: #16a34a
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: #3a465b
+}
+
+.btn-outline:hover {
+  background: #141b28
+}
+
+.btn-ghost {
+  background: transparent
+}
+
+.btn-ghost:hover {
+  background: #121826
+}
+
+.btn-sm {
+  padding: 8px 12px
+}
+
+.btn-lg {
+  padding: 12px 18px;
+  border-radius: 12px
+}
+
+.label {
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 6px
+}
+
+.input {
+  width: 100%;
+  background: rgba(15, 22, 35, .85);
+  color: #e9edf7;
+  border: 1px solid #253044;
+  border-radius: 10px;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s, background .2s
+}
+
+.editing .input {
+  border-color: rgba(34, 197, 94, .35);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, .35);
+  background: #0c1320;
+}
+
+.input::placeholder {
+  color: #98a3b4
+}
+
+.input:focus {
+  border-color: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, .35);
+  background: #0c1320
+}
+
+.help {
+  font-size: 12px;
+  opacity: .85
+}
+
+.error {
+  color: #ffb4b4;
+  font-size: 13px
+}
+
+.card {
+  background: rgba(15, 22, 35, .85);
+  border: 1px solid #253044;
+  border-radius: 12px;
+  backdrop-filter: blur(3px)
+}
+
+.card-pad {
+  padding: 16px
+}
+
+.table-wrap {
+  overflow-x: auto
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(15, 22, 35, .85);
+  color: #e9edf7;
+  border: 1px solid #253044;
+  border-radius: 12px;
+  overflow: hidden
+}
+
+.table thead th {
+  text-align: left;
+  font-weight: 700;
+  font-size: 14px;
+  color: #aab4c3;
+  background: #0c1320;
+  padding: 12px 14px;
+  border-bottom: 1px solid #253044
+}
+
+.table tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #192235
+}
+
+.table tbody tr:nth-child(even) {
+  background: #0e1522
+}
+
+.table tbody tr:hover {
+  background: #121c2d
+}
 
 
-.badge{display:inline-block;
-    padding:4px 8px;
-    border-radius:999px;
-    font-size:12px;
-    font-weight:700}
-.badge-role{background:#0f1520;
-    border:1px solid #253044;
-    color:#c9d3e3}
+.badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700
+}
+
+.badge-role {
+  background: #0f1520;
+  border: 1px solid #253044;
+  color: #c9d3e3
+}
