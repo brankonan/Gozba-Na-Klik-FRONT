@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/index.scss";
+import UserAvatar from "../../components/UserAvatar";
 
 const Admin = () => {
   const [open, setOpen] = useState(false);
@@ -10,7 +11,6 @@ const Admin = () => {
       <header className="navbar">
         <div className="navbar-inner">
           <div style={{ fontWeight: 800 }}>Admin·Panel</div>
-
           <div style={{ position: "relative" }}>
             <button
               className="btn btn-outline btn-sm"
@@ -20,9 +20,14 @@ const Admin = () => {
             >
               ☰ Menu
             </button>
-
+            <UserAvatar />
             {open && (
-              <ul className="menu" role="menu" aria-label="Admin menu">
+              <ul
+                className="menu"
+                role="menu"
+                aria-label="Admin menu"
+                style={{ position: "absolute" }}
+              >
                 <li>
                   <Link to="/admin/users" role="menuitem">
                     View users
@@ -38,7 +43,6 @@ const Admin = () => {
           </div>
         </div>
       </header>
-
       <main className="section">
         <div className="container" style={{ textAlign: "center" }}>
           <h1 className="h1">Admin panel</h1>
