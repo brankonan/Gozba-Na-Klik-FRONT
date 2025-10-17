@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/index.scss";
+import UserAvatar from "../../components/UserAvatar";
 
 const Admin = () => {
   const [open, setOpen] = useState(false);
@@ -17,6 +18,23 @@ const Admin = () => {
               onClick={() => setOpen((v) => !v)}
               aria-haspopup="menu"
               aria-expanded={open}
+          <button
+            className="btn btn-outline btn-sm"
+            onClick={() => setOpen((v) => !v)}
+            aria-haspopup="menu"
+            aria-expanded={open}
+          >
+            ☰ Menu
+          </button>
+          <UserAvatar />
+        </div>
+        {open && (
+          <nav className="container" style={{ position: "relative" }}>
+            <ul
+              className="menu"
+              role="menu"
+              aria-label="Admin menu"
+              style={{ position: "absolute" }}
             >
               ☰ Menu
             </button>

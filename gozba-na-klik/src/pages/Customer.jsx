@@ -1,13 +1,15 @@
 import React from "react";
+import EditProfile from "./EditProfile";
+import Navbar from "./Navbar";
 
 const Customer = () => {
 
-
-    return (
+    return(
         <>
-            <h1>Welcome customer</h1>
+            <Navbar />
+            <EditProfile/>
         </>
     )
 }
 
-export default Customer
+export default Customer;
