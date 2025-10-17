@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom";
 import { uploadUserPhoto, deleteUserPhoto } from "../api/userService";
 import "../styles/index.scss";
 import UserAvatar from "../components/UserAvatar";
+import React from "react";
+import EditProfile from "./EditProfile";
+import Navbar from "./Navbar";
 
 const Customer = () => {
   const { id } = useParams();
@@ -140,5 +143,14 @@ const Customer = () => {
     </>
   );
 };
+
+export default Customer;
+    return(
+        <>
+            <Navbar />
+            <EditProfile/>
+        </>
+    )
+}
 
 export default Customer;

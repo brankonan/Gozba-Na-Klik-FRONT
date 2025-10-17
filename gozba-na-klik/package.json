@@ -16,6 +16,7 @@
     "react-router-dom": "^7.9.2",
     "react-toastify": "^11.0.5",
     "sass": "^1.93.2"
+    "vite-plugin-svgr": "^4.5.0"
   },
   "devDependencies": {
     "sass-embedded": "^1.93.2",
