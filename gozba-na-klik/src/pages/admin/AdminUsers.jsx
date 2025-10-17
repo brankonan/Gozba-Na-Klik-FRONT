@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { getAllUsers, createUser } from "../../api/adminService";
+import { useNavigate } from "react-router-dom";
 import "../../styles/index.scss";
 import UserAvatar from "../../components/UserAvatar";
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -181,6 +183,11 @@ const AdminUsers = () => {
           </div>
         </section>
       </main>
+       <button
+                className="btn btn-primary btn-sm"
+                onClick={() => navigate("/admin")}>
+                    ← Back
+            </button>
     </div>
   );
 };
