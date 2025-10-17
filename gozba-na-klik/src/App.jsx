@@ -12,11 +12,12 @@ import Courier from "./pages/Courier";
 import AdminRestaurants from "./pages/admin/AdminRestaurants";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/login" element={<Login />} />
@@ -31,11 +32,10 @@ function App() {
         <Route path="employee/:id" element={<Employee />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/users" element={<AdminUsers />} />
-        <Route path="/admin/restaurants" element={<AdminRestaurants/>} />
-        </Routes>
+        <Route path="/admin/restaurants" element={<AdminRestaurants />} />
+      </Routes>
       <ToastContainer position="top-right" autoClose={3000} />
     </>
-    
   );
 }
 
