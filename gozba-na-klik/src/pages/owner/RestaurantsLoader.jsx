@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getMyRestaurant } from "../api/ownerService";
-import UserAvatar from "../components/UserAvatar";
-import { API_ORIGIN } from "../api/axios";
-import "../styles/index.scss";
+import { getMyRestaurant } from "../../api/ownerService";
+import UserAvatar from "../../components/shared/UserAvatar";
+import { API_ORIGIN } from "../../api/axios";
+import "../../styles/index.scss";
 
 const Owner = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -10,7 +10,6 @@ const Owner = () => {
 
   const raw = localStorage.getItem("user");
   const user = raw ? JSON.parse(raw) : null;
-  const ownerId = user?.id ?? user?.Id;
 
   useEffect(() => {
     if (!user) return;

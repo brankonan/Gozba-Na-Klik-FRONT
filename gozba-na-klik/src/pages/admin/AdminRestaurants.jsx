@@ -9,8 +9,8 @@ import {
   getAllOwners,
 } from "../../api/adminService";
 
-import RestaurantForm from "./components/RestaurantForm";
-import RestaurantTable from "./components/RestaurantTable";
+import RestaurantForm from "./RestaurantForm";
+import RestaurantTable from "./RestaurantTable";
 
 const AdminRestaurants = () => {
     const navigate = useNavigate();

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { getAllUsers, createUser } from "../../api/adminService";
 import { useNavigate } from "react-router-dom";
 import "../../styles/index.scss";
-import UserAvatar from "../../components/UserAvatar";
+import UserAvatar from "../../components/shared/UserAvatar";
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);

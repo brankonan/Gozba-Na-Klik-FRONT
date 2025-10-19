@@ -1,8 +1,8 @@
 import React from "react";
-import "../styles/index.scss";
+import "../../styles/index.scss";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { handleLogin } from "../api/authService";
+import { handleLogin } from "../../api/authService";
 
 const Login = () => {
   const navigate = useNavigate();

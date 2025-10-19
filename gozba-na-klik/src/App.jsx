@@ -1,38 +1,26 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Welcome from "./pages/Welcome";
-import Admin from "./pages/admin/Admin";
-import AdminUsers from "./pages/admin/AdminUsers";
-import Employee from "./pages/Employee";
-import Owner from "./pages/Owner";
-import Customer from "./pages/Customer";
-import Courier from "./pages/Courier";
-import AdminRestaurants from "./pages/admin/AdminRestaurants";
 import { ToastContainer } from "react-toastify";
+import Navbar from "./components/shared/Navbar";
+import PublicRoutes from "./pages/public/PublicRoutes";
+import OwnerRoutes from "./pages/owner/OwnerRoutes";
+import AdminRoutes from "./pages/admin/AdminRoutes";
+import CustomerRoutes from "./pages/customer/CustomerRoutes";
+import EmployeeRoutes from "./pages/employee/EmployeeRoutes";
+import CourierRoutes from "./pages/courier/CourierRoutes";
 import "react-toastify/dist/ReactToastify.css";
-import Navbar from "./components/Navbar";
+
 
 function App() {
   return (
     <>
-      <Navbar />
       <Routes>
-        <Route path="/" element={<Welcome />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/courier/schedule" element={<Courier />} />
-        <Route path="/employee/orders" element={<Employee />} />
-        <Route path="/owner" element={<Owner />} />
-        <Route path="admin/:id" element={<Admin />} />
-        <Route path="profile/:id" element={<Customer />} />
-        <Route path="courier/:id" element={<Courier />} />
-        <Route path="owner/:id" element={<Owner />} />
-        <Route path="employee/:id" element={<Employee />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/admin/users" element={<AdminUsers />} />
-        <Route path="/admin/restaurants" element={<AdminRestaurants />} />
+        <Route path="/*" element={<PublicRoutes />} />
+        <Route path="/owner/*" element={<OwnerRoutes />} />
+        <Route path="/admin/*" element={<AdminRoutes />} />
+        <Route path="/customer/*" element={<CustomerRoutes />} />
+        <Route path="/employee/*" element={<EmployeeRoutes />} />
+        <Route path="/courier/*" element={<CourierRoutes />} />
       </Routes>
       <ToastContainer position="top-right" autoClose={3000} />
     </>
