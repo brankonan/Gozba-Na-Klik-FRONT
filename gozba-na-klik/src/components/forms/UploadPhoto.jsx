@@ -1,8 +1,8 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { uploadUserPhoto, deleteUserPhoto } from "../api/userService";
-import "../styles/index.scss";
-import UserAvatar from "../components/UserAvatar";
+import { uploadUserPhoto, deleteUserPhoto } from "../../api/userService";
+import "../../styles/index.scss";
+import UserAvatar from "../shared/UserAvatar";
 
 
 const UploadPhoto = () => {

@@ -1,13 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/index.scss";
-import Navbar from "./Navbar";
+import "../../styles/index.scss";
 
 export default function Welcome() {
   const navigate = useNavigate();
   return (
     <>
-      <Navbar/>
       <main className="section">
         <div
           className="container card card-pad center"

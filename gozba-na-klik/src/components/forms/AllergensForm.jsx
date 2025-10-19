@@ -1,14 +1,14 @@
-import { getAllergensAsync } from "../api/userService";
+import { getAllergensAsync } from "../../api/userService";
 import React, { useEffect, useState } from "react";
-import eggs from "../assets/icons/eggs.svg";
-import fish from "../assets/icons/fish.svg";
-import lactose from "../assets/icons/lactose.svg";
-import nuts from "../assets/icons/nuts.png";
-import peanuts from "../assets/icons/peanuts.png";
-import shellfish from "../assets/icons/shellfish.png";
-import soy from "../assets/icons/soy.svg";
-import gluten from "../assets/icons/gluten.svg";
-import "../styles/allergens.scss";
+import eggs from "../../assets/icons/eggs.svg";
+import fish from "../../assets/icons/fish.svg";
+import lactose from "../../assets/icons/lactose.svg";
+import nuts from "../../assets/icons/nuts.png";
+import peanuts from "../../assets/icons/peanuts.png";
+import shellfish from "../../assets/icons/shellfish.png";
+import soy from "../../assets/icons/soy.svg";
+import gluten from "../../assets/icons/gluten.svg";
+import "../../styles/Allergens.scss";
 
 export const Allergens = ({ userId, refresh }) => {
     const [allergens, setAllergens] = useState([]);

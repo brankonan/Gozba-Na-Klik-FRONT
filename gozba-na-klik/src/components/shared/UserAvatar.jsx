@@ -1,5 +1,5 @@
 import React from "react";
-import { API_ORIGIN } from "../api/axios";
+import { API_ORIGIN } from "../../api/axios";
 
 function getUser() {
   try {
