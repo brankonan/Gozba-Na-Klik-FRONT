@@ -1,11 +1,11 @@
 * {
-  box-sizing: border-box
+  box-sizing: border-box;
 }
 
 html,
 body,
 #root {
-  height: 100%
+  height: 100%;
 }
 
 body {
@@ -14,7 +14,7 @@ body {
   line-height: 1.5;
   background: #0b0f14;
   color: #e9edf7;
-  transition: background-color .2s, color .2s
+  transition: background-color 0.2s, color 0.2s;
 }
 
 body::before {
@@ -24,57 +24,56 @@ body::before {
   left: 0;
   right: 0;
   height: 70vh;
-  background:
-    linear-gradient(0deg, rgba(0, 0, 0, .45), rgba(0, 0, 0, .45)),
-    url("/src/images/ai-generated-assorted-indian-food-on-dark-wooden-background-free-photo.jpg") center/cover no-repeat;
-  z-index: -1
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    url("/src/images/ai-generated-assorted-indian-food-on-dark-wooden-background-free-photo.jpg")
+      center/cover no-repeat;
+  z-index: -1;
 }
 
 img {
   max-width: 100%;
-  display: block
+  display: block;
 }
 
 a {
   color: #9fd3ff;
   text-decoration: none;
-  transition: opacity .2s
+  transition: opacity 0.2s;
 }
 
 a:hover {
-  opacity: .9
+  opacity: 0.9;
 }
 
 h1,
 h2,
 h3 {
-  margin: 0 0 8px
+  margin: 0 0 8px;
 }
 
 p {
-  margin: 0 0 12px
+  margin: 0 0 12px;
 }
-
 
 .row {
   display: flex;
   gap: 8px;
-  align-items: center
+  align-items: center;
 }
 
 .stack {
   display: grid;
-  gap: 12px
+  gap: 12px;
 }
 
 .section {
-  padding: 16px 0
+  padding: 16px 0;
 }
 
 .navbar {
-  background: rgba(20, 26, 35, .85);
+  background: rgba(20, 26, 35, 0.85);
   backdrop-filter: blur(6px);
-  border-bottom: 1px solid rgba(255, 255, 255, .06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .navbar-inner {
@@ -89,31 +88,24 @@ p {
     color: #ffffff;
     letter-spacing: 0.5px;
     color: #5cff8d;
-    text-shadow:
-      0 0 6px rgba(34, 197, 94, 0.6),
-      0 0 12px rgba(34, 197, 94, 0.4),
+    text-shadow: 0 0 6px rgba(34, 197, 94, 0.6), 0 0 12px rgba(34, 197, 94, 0.4),
       0 0 20px rgba(34, 197, 94, 0.2);
-
 
     &:hover {
       animation: neonGlow 2s ease-in-out infinite;
-      cursor:default;
+      cursor: default;
     }
 
     @keyframes neonGlow {
       0%,
       100% {
-        text-shadow:
-          0 0 5px rgba(34, 197, 94, 0.4),
-          0 0 10px rgba(34, 197, 94, 0.3),
-          0 0 20px rgba(34, 197, 94, 0.2);
+        text-shadow: 0 0 5px rgba(34, 197, 94, 0.4),
+          0 0 10px rgba(34, 197, 94, 0.3), 0 0 20px rgba(34, 197, 94, 0.2);
       }
 
       50% {
-        text-shadow:
-          0 0 30px rgba(34, 197, 94, 0.8),
-          0 0 40px rgba(34, 197, 94, 0.6),
-          0 0 60px rgba(34, 197, 94, 0.5);
+        text-shadow: 0 0 30px rgba(34, 197, 94, 0.8),
+          0 0 40px rgba(34, 197, 94, 0.6), 0 0 60px rgba(34, 197, 94, 0.5);
       }
     }
   }
@@ -148,17 +140,15 @@ p {
   }
 }
 
-
-
 .menu {
   min-width: 180px;
   list-style: none;
   padding: 8px;
   margin: 0;
-  background: rgba(15, 22, 35, .8);
+  background: rgba(15, 22, 35, 0.8);
   border: 1px solid #253044;
   border-radius: 12px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, .35);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(4px);
   position: absolute;
   top: 100%;
@@ -169,11 +159,11 @@ p {
   display: block;
   padding: 8px 12px;
   border-radius: 8px;
-  color: #e9edf7
+  color: #e9edf7;
 }
 
 .menu a:hover {
-  background: #0f1726
+  background: #0f1726;
 }
 
 .btn {
@@ -185,113 +175,113 @@ p {
   border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
-  transition: transform .12s, opacity .2s, background .2s, border-color .2s
+  transition: transform 0.12s, opacity 0.2s, background 0.2s, border-color 0.2s;
 }
 
 .btn:active {
-  transform: translateY(1px)
+  transform: translateY(1px);
 }
 
 .btn:disabled {
-  opacity: .6;
-  cursor: not-allowed
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .btn-primary {
   background: #22c55e;
-  box-shadow: 0 4px 14px rgba(34, 197, 94, .25)
+  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.25);
 }
 
 .btn-primary:hover {
-  background: #16a34a
+  background: #16a34a;
 }
 
 .btn-outline {
   background: transparent;
-  border-color: #3a465b
+  border-color: #3a465b;
 }
 
 .btn-outline:hover {
-  background: #141b28
+  background: #141b28;
 }
 
 .btn-ghost {
-  background: transparent
+  background: transparent;
 }
 
 .btn-ghost:hover {
-  background: #121826
+  background: #121826;
 }
 
 .btn-sm {
-  padding: 8px 12px
+  padding: 8px 12px;
 }
 
 .btn-lg {
   padding: 12px 18px;
-  border-radius: 12px
+  border-radius: 12px;
 }
 
 .label {
   font-weight: 600;
   display: inline-block;
-  margin-bottom: 6px
+  margin-bottom: 6px;
 }
 
 .input {
   width: 100%;
-  background: rgba(15, 22, 35, .85);
+  background: rgba(15, 22, 35, 0.85);
   color: #e9edf7;
   border: 1px solid #253044;
   border-radius: 10px;
   padding: 10px 12px;
   outline: none;
-  transition: border-color .2s, box-shadow .2s, background .2s
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
 .input::placeholder {
-  color: #98a3b4
+  color: #98a3b4;
 }
 
 .input:focus {
   border-color: #22c55e;
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, .35);
-  background: #0c1320
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.35);
+  background: #0c1320;
 }
 
 .help {
   font-size: 12px;
-  opacity: .85
+  opacity: 0.85;
 }
 
 .error {
   color: #ffb4b4;
-  font-size: 13px
+  font-size: 13px;
 }
 
 .card {
-  background: rgba(15, 22, 35, .85);
+  background: rgba(15, 22, 35, 0.85);
   border: 1px solid #253044;
   border-radius: 12px;
-  backdrop-filter: blur(3px)
+  backdrop-filter: blur(3px);
 }
 
 .card-pad {
-  padding: 16px
+  padding: 16px;
 }
 
 .table-wrap {
-  overflow-x: auto
+  overflow-x: auto;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  background: rgba(15, 22, 35, .85);
+  background: rgba(15, 22, 35, 0.85);
   color: #e9edf7;
   border: 1px solid #253044;
   border-radius: 12px;
-  overflow: hidden
+  overflow: hidden;
 }
 
 .table thead th {
@@ -301,35 +291,34 @@ p {
   color: #aab4c3;
   background: #0c1320;
   padding: 12px 14px;
-  border-bottom: 1px solid #253044
+  border-bottom: 1px solid #253044;
 }
 
 .table tbody td {
   padding: 12px 14px;
-  border-bottom: 1px solid #192235
+  border-bottom: 1px solid #192235;
 }
 
 .table tbody tr:nth-child(even) {
-  background: #0e1522
+  background: #0e1522;
 }
 
 .table tbody tr:hover {
-  background: #121c2d
+  background: #121c2d;
 }
-
 
 .badge {
   display: inline-block;
   padding: 4px 8px;
   border-radius: 999px;
   font-size: 12px;
-  font-weight: 700
+  font-weight: 700;
 }
 
 .badge-role {
   background: #0f1520;
   border: 1px solid #253044;
-  color: #c9d3e3
+  color: #c9d3e3;
 }
 
 //dugmiciii ako Petar zeli da se igra da ne bodu oci
@@ -337,7 +326,7 @@ p {
   background: #5a0f0f;
   color: #fff;
   border: 1px solid #7f1d1d;
-  box-shadow: 0 4px 14px rgba(185, 28, 28, .25);
+  box-shadow: 0 4px 14px rgba(185, 28, 28, 0.25);
 }
 
 .btn-delete:hover {
@@ -348,13 +337,12 @@ p {
   background: #0f2962;
   color: #fff;
   border: 1px solid #1e3a8a;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, .25);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
 }
 
 .btn-edit:hover {
   background: #133182;
 }
-
 
 // OWNER PAGE STILOVI
 
@@ -374,7 +362,7 @@ p {
 .restaurant-card {
   overflow: hidden;
   border-radius: 12px;
-  background: rgba(15, 22, 35, .85);
+  background: rgba(15, 22, 35, 0.85);
   border: 1px solid #253044;
   color: #e9edf7;
   backdrop-filter: blur(3px);
@@ -421,27 +409,27 @@ p {
 
 img {
   max-width: 100%;
-  display: block
+  display: block;
 }
 
 a {
   color: #9fd3ff;
   text-decoration: none;
-  transition: opacity .2s
+  transition: opacity 0.2s;
 }
 
 a:hover {
-  opacity: .9
+  opacity: 0.9;
 }
 
 h1,
 h2,
 h3 {
-  margin: 0 0 8px
+  margin: 0 0 8px;
 }
 
 p {
-  margin: 0 0 12px
+  margin: 0 0 12px;
 }
 
 .container {
@@ -457,49 +445,46 @@ p {
   gap: 50px;
 }
 
-
 .avatar-container {
   display: flex;
   gap: 10px;
 }
 
-
 .row {
   display: flex;
   gap: 8px;
-  align-items: center
+  align-items: center;
 }
 
 .stack {
   display: grid;
-  gap: 12px
+  gap: 12px;
 }
 
 .section {
-  padding: 16px 0
+  padding: 16px 0;
 }
-
 
 .menu {
   list-style: none;
   padding: 8px;
   margin: 8px 0 0;
-  background: rgba(15, 22, 35, .8);
+  background: rgba(15, 22, 35, 0.8);
   border: 1px solid #253044;
   border-radius: 12px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, .35);
-  backdrop-filter: blur(4px)
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
 }
 
 .menu a {
   display: block;
   padding: 8px 12px;
   border-radius: 8px;
-  color: #e9edf7
+  color: #e9edf7;
 }
 
 .menu a:hover {
-  background: #0f1726
+  background: #0f1726;
 }
 
 .btn {
@@ -511,119 +496,119 @@ p {
   border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
-  transition: transform .12s, opacity .2s, background .2s, border-color .2s
+  transition: transform 0.12s, opacity 0.2s, background 0.2s, border-color 0.2s;
 }
 
 .btn:active {
-  transform: translateY(1px)
+  transform: translateY(1px);
 }
 
 .btn:disabled {
-  opacity: .6;
-  cursor: not-allowed
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .btn-primary {
   background: #22c55e;
-  box-shadow: 0 4px 14px rgba(34, 197, 94, .25)
+  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.25);
 }
 
 .btn-primary:hover {
-  background: #16a34a
+  background: #16a34a;
 }
 
 .btn-outline {
   background: transparent;
-  border-color: #3a465b
+  border-color: #3a465b;
 }
 
 .btn-outline:hover {
-  background: #141b28
+  background: #141b28;
 }
 
 .btn-ghost {
-  background: transparent
+  background: transparent;
 }
 
 .btn-ghost:hover {
-  background: #121826
+  background: #121826;
 }
 
 .btn-sm {
-  padding: 8px 12px
+  padding: 8px 12px;
 }
 
 .btn-lg {
   padding: 12px 18px;
-  border-radius: 12px
+  border-radius: 12px;
 }
 
 .label {
   font-weight: 600;
   display: inline-block;
-  margin-bottom: 6px
+  margin-bottom: 6px;
 }
 
 .input {
   width: 100%;
-  background: rgba(15, 22, 35, .85);
+  background: rgba(15, 22, 35, 0.85);
   color: #e9edf7;
   border: 1px solid #253044;
   border-radius: 10px;
   padding: 10px 12px;
   outline: none;
-  transition: border-color .2s, box-shadow .2s, background .2s
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
 .editing .input {
-  border-color: rgba(34, 197, 94, .35);
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, .35);
+  border-color: rgba(34, 197, 94, 0.35);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.35);
   background: #0c1320;
 }
 
 .input::placeholder {
-  color: #98a3b4
+  color: #98a3b4;
 }
 
 .input:focus {
   border-color: #22c55e;
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, .35);
-  background: #0c1320
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.35);
+  background: #0c1320;
 }
 
 .help {
   font-size: 12px;
-  opacity: .85
+  opacity: 0.85;
 }
 
 .error {
   color: #ffb4b4;
-  font-size: 13px
+  font-size: 13px;
 }
 
 .card {
-  background: rgba(15, 22, 35, .85);
+  background: rgba(15, 22, 35, 0.85);
   border: 1px solid #253044;
   border-radius: 12px;
-  backdrop-filter: blur(3px)
+  backdrop-filter: blur(3px);
 }
 
 .card-pad {
-  padding: 16px
+  padding: 16px;
 }
 
 .table-wrap {
-  overflow-x: auto
+  overflow-x: auto;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  background: rgba(15, 22, 35, .85);
+  background: rgba(15, 22, 35, 0.85);
   color: #e9edf7;
   border: 1px solid #253044;
   border-radius: 12px;
-  overflow: hidden
+  overflow: hidden;
 }
 
 .table thead th {
@@ -633,33 +618,32 @@ p {
   color: #aab4c3;
   background: #0c1320;
   padding: 12px 14px;
-  border-bottom: 1px solid #253044
+  border-bottom: 1px solid #253044;
 }
 
 .table tbody td {
   padding: 12px 14px;
-  border-bottom: 1px solid #192235
+  border-bottom: 1px solid #192235;
 }
 
 .table tbody tr:nth-child(even) {
-  background: #0e1522
+  background: #0e1522;
 }
 
 .table tbody tr:hover {
-  background: #121c2d
+  background: #121c2d;
 }
-
 
 .badge {
   display: inline-block;
   padding: 4px 8px;
   border-radius: 999px;
   font-size: 12px;
-  font-weight: 700
+  font-weight: 700;
 }
 
 .badge-role {
   background: #0f1520;
   border: 1px solid #253044;
-  color: #c9d3e3
+  color: #c9d3e3;
 }

@@ -6,13 +6,13 @@ import OwnerLayout from "../../layouts/OwnerLayout";
 import EditProfile from "../../components/forms/EditProfile";
 
 export default function OwnerRoutes() {
-    return (
-        <Routes>
-            <Route element={<OwnerLayout />}>
-                <Route path="retaurant/:id/menu" element={<RestaurantMenuLoader />} />
-                <Route path="profile/:id" element={<EditProfile />}></Route>
-                <Route path="restaurants" index element={<RestaurantsLoader />} />
-            </Route>
-        </Routes>
-    );
+  return (
+    <Routes>
+      <Route path="/owner" element={<OwnerLayout />}>
+        <Route path="restaurant/:id/menu" element={<RestaurantMenuLoader />} />
+        <Route path="profile/:id" element={<EditProfile />} />
+        <Route path="restaurants" element={<RestaurantsLoader />} />
+      </Route>
+    </Routes>
+  );
 }
