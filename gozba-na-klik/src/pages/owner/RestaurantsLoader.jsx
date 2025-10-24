@@ -21,16 +21,7 @@ const Owner = () => {
   function buildPhotoUrl(photo) {
     if (!photo) return "https://via.placeholder.com/300x180?text=No+Image";
     if (/^https?:\/\//i.test(photo)) return photo;
-
-    try {
-      const url = new URL(API_ORIGIN);
-      const base = url.origin;
-      return `${base}${photo.startsWith("/") ? photo : `/${photo}`}`;
-    } catch {
-      return `${API_ORIGIN.replace(/\/api\/?$/, "")}${
-        photo.startsWith("/") ? photo : `/${photo}`
-      }`;
-    }
+    return `${API_ORIGIN}${photo.startsWith("/") ? photo : `/${photo}`}`;
   }
 
   async function load() {
@@ -113,7 +104,6 @@ const Owner = () => {
               ownerId={user.id}
               onClose={() => setEditing(null)}
               onUpdated={() => {
-                setEditing(null);
                 load();
               }}
             />

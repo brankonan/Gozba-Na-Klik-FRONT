@@ -70,16 +70,30 @@ export default function OwnerEditSchedule({
 
   async function saveSchedule() {
     try {
-      const clean = schedule.map((s) => ({
-        id: 0,
-        restaurantId,
-        dayOfWeek: s.dayOfWeek,
-        isClosed: !!s.isClosed,
-        open: s.isClosed ? "" : s.open,
-        close: s.isClosed ? "" : s.close,
-      }));
+      const clean = schedule.map((s) => {
+        let open = s.isClosed ? null : s.open;
+        let close = s.isClosed ? null : s.close;
+
+        if (open && open.length === 5) open = `${open}:00`;
+        if (close && close.length === 5) close = `${close}:00`;
+
+        if (s.isClosed) {
+          open = "00:00:00";
+          close = "00:00:00";
+        }
+
+        return {
+          id: 0,
+          restaurantId,
+          dayOfWeek: s.dayOfWeek,
+          isClosed: s.isClosed,
+          open,
+          close,
+        };
+      });
 
       console.log("Payload koji saljem:", clean);
+
       await putSchedule(restaurantId, clean, ownerId);
       onUpdated && onUpdated();
       alert("Schedule saved.");
