@@ -14,9 +14,7 @@ const CartPopup = ({ cart, restaurant, user, onCancel }) => {
       toast.error("Korpa je prazna!");
       return;
     }
-    const klik = () => {
-      console.log("Kliknuto na alert");
-    }
+    
     const orderData = {
       restaurantId: restaurant.id,
       customerId: user.id,
@@ -32,14 +30,11 @@ const CartPopup = ({ cart, restaurant, user, onCancel }) => {
     };
 
     try {
-      console.log("Šaljem orderData:", orderData);
 
       const result = await createOrder(orderData);
 
-      console.log("Dobijen result:", result);
 
       toast.success(`Porudzbina #${result.id} uspesno kreirana!`);
-      alert(`Porudzbina #${result.id} uspesno kreirana!`);
       console.log("Order created:");
     } catch (err) {
       console.error(err);
