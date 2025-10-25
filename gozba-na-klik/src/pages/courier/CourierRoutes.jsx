@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import CourierLayout from "../../layouts/CourierLayout";
-import EditProfile from "../../components/forms/EditProfile";
+import EditProfile from "../../components/forms/EditProfile/EditProfile";
 
 export default function CourierRoutes() {
     return (

@@ -1,7 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import Navbar from "./components/shared/Navbar";
 import PublicRoutes from "./pages/public/PublicRoutes";
 import OwnerRoutes from "./pages/owner/OwnerRoutes";
 import AdminRoutes from "./pages/admin/AdminRoutes";

@@ -97,10 +97,11 @@ p {
 
     &:hover {
       animation: neonGlow 2s ease-in-out infinite;
-      cursor:default;
+      cursor: default;
     }
 
     @keyframes neonGlow {
+
       0%,
       100% {
         text-shadow:
@@ -662,4 +663,84 @@ p {
   background: #0f1520;
   border: 1px solid #253044;
   color: #c9d3e3
+}
+
+.menu-page {
+
+  .menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding: 5px 30px;
+    margin: 30px auto 10px;
+    background-color: #0e1522;
+    max-width: 1000px;
+    box-shadow: 0 0 0 3px rgb(3, 250, 94, 0.3);
+
+    h1{
+      width: 90%;
+    }
+
+    button{
+      font-size: 30px;
+      font-weight: 900;
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+    }
+  }
+}
+
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+  gap: 15px;
+  margin: 0 auto;
+
+  .menuItem-card {
+    background: rgba(15, 22, 35, 0.85);
+    backdrop-filter: blur(6px);
+    width: 100%;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    img {
+      width: 200px;
+      height: 140px;
+    }
+
+    span {
+      display: block;
+      overflow-wrap: break-word;
+      font-size: 20px;
+    }
+
+    .name {
+      flex: 0 0 18%;
+      font-weight: bold;
+      font-size: 20px;
+      text-align: center;
+    }
+
+    .description {
+      flex: 0 0 35%;
+    }
+
+    .price {
+      margin: 0 auto;
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      margin: 0 auto;
+      gap: 10px;
+      padding-right: 10px;
+    }
+  }
 }
