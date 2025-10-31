@@ -12,7 +12,7 @@ export default function CourierRoutes() {
         <Route path="schedule" element={<CourierSchedule />} />
         <Route path="schedule/:id" element={<CourierSchedule />} />
         <Route path="profile/:id" element={<EditProfile />} />
-        {/* fallback da NIKAD ne bude prazan ekran */}
+        {/* fallback da NIKAD ne bude prazan ekran  AZ */}
         <Route path="*" element={<Navigate to="schedule" replace />} />
       </Route>
     </Routes>

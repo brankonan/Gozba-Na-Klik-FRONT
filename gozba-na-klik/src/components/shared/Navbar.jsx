@@ -58,6 +58,7 @@ export default function Navbar() {
             {user.role === "Customer" && (
               <div className="links">
                 <NavLink to="/">POCETNA</NavLink>
+                <NavLink to="/customer/addresses">ADRESE</NavLink>
                 <NavLink to={`/customer/profile/${user.id}`}>PROFIL</NavLink>
               </div>
             )}
