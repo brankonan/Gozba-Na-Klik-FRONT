@@ -1,0 +1,50 @@
+
+.menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+}
+
+.menuItem-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 1000px; 
+    height: 160px;
+    background: rgba(19, 26, 41, 0.904);
+    box-shadow: 0 2px 5px rgba(13, 231, 9, 0.229);
+    gap: 10px;
+
+    img {
+        flex: 1 1 22%;
+        width: 200px;
+        height: 100%;
+    }
+
+    .name{
+        width: 20%;
+    }
+    .description{
+        width: 40%;
+    }
+    .price{
+        width: 10%;
+    }
+
+    .actions {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        width: 15%;
+        
+        button{
+            max-width: 110px;
+        }
+    }
+}

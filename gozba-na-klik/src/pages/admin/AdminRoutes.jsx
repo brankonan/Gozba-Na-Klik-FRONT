@@ -1,10 +1,9 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import AdminLayout from "../../layouts/AdminLayout";
-// import Admin from "./Admin";
 import AdminRestaurants from "./AdminRestaurants";
 import AdminUsers from "./AdminUsers";
-import EditProfile from "../../components/forms/EditProfile";
+import EditProfile from "../../components/forms/EditProfile/EditProfile";
 
 export default function AdminRoutes() {
     return (

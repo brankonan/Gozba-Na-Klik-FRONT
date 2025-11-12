@@ -1,0 +1,47 @@
+.cart-popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+  background: rgba(15, 22, 35, .85);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  width: 300px;
+  padding: 16px;
+  animation: fadeIn 0.3s ease-in-out;
+
+  .cart-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+
+  .cart-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

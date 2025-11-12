@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { updateAsync } from "../../api/userService";
-import UploadPhoto from "./UploadPhoto";
+import { updateAsync } from "../../../api/userService";
+import UploadPhoto from "../UploadPhoto";
 import CustomerProfileFields from "./CustomerProfileFields";
-import Allergens from "./AllergensForm";
+import Allergens from "../../LoadAllergens";
 
 const EditProfile = () => {
     const [user, setUser] = useState(null);
