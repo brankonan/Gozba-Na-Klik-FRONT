@@ -5,17 +5,13 @@ import { deleteMenuItem, updateMenuItem } from "../../api/ownerRestaurantService
 import MenuItemForm from "../../components/forms/MenuItemForm";
 
 const RestaurantMenuLoaderOwner = () => {
-    const [menu, setMenu] = useState([]);
+    const [menu, setMenu] = useState(null);
     const [editingItem, setEditingItem] = useState(null);
 
-    const { state } = useLocation();
-    const restaurant = state;
-    const restaurantMenu = restaurant?.menu || [];
-
+    const { state: restaurant } = useLocation();
     useEffect(() => {
-        if (restaurantMenu) setMenu(restaurantMenu);
-    }, [restaurantMenu])
-
+        setMenu(restaurant.menu);
+    }, [restaurant.menu]);
     const handleEdit = async (itemId) => {
         const item = menu.find((m) => m.id === itemId);
         if (item) setEditingItem(item);
@@ -31,7 +27,7 @@ const RestaurantMenuLoaderOwner = () => {
             alert("Greska pri azuriranju jela.");
         }
     };
-    
+
 
     const handleDelete = async (itemId) => {
         try {
@@ -49,13 +45,13 @@ const RestaurantMenuLoaderOwner = () => {
         <div className="menu-page">
             <div className="menu-header">
                 <h1>Meni restorana: {restaurant.name}</h1>
-                <button
-                    className="btn-primary"
-                    onClick={() => setEditingItem({ name: "", description: "", price: 0 })}
-                    title="Dodaj novo jelo"
-                >
-                    +
-                </button>
+                    <button
+                        className="btn btn-primary"
+                        onClick={() => setEditingItem({ name: "", description: "", price: 0 })}
+                        title="Dodaj novo jelo"
+                    >
+                        Dodaj novo jelo
+                    </button>
             </div>
             <RestaurantMenu menu={menu} role="owner" onEdit={handleEdit} onDelete={handleDelete} />
 

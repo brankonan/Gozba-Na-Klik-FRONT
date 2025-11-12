@@ -2,7 +2,7 @@ import React from "react";
 import RestaurantCard from "./RestaurantCard";
 
 const RestaurantsGrid = ({ restaurants }) => {
-
+console.log(restaurants);
   if (!restaurants || restaurants.length === 0) {
     return <p className="empty-state">Nemate nijedan restoran.</p>;
   }

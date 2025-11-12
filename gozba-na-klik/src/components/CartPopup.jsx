@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { createOrder } from "../api/orderService";
 
 const CartPopup = ({ cart, restaurant, user, onCancel }) => {
-
+  console.log(user);
   const total = cart.reduce((sum, i) => sum + i.price, 0);
   const delivery = cart.length > 0 ? 200 : 0;
   const finalTotal = total + delivery;

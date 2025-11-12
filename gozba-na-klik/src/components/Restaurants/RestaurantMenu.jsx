@@ -1,7 +1,9 @@
 import React from "react";
+import "../../styles/MenuItemCard.scss";
+
 
 const RestaurantMenu = ({ menu, role, onEdit, onDelete, onAddToCart }) => {
-
+  
   if (!menu || menu.length === 0) return <p>Nema jela u meniju.</p>;
 
   const isOwner = role === "owner";
@@ -25,7 +27,7 @@ const RestaurantMenu = ({ menu, role, onEdit, onDelete, onAddToCart }) => {
             )}
 
             {isCustomer && (
-              <button className="btn btn-add" onClick={() => onAddToCart?.(item)}>Dodaj u korpu</button>
+              <button className="btn btn-primary" onClick={() => onAddToCart?.(item)}>Dodaj u korpu</button>
             )}
           </div>
         </div>
