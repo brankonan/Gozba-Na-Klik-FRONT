@@ -512,3 +512,18 @@ p {
 .info--muted {
   opacity: 0.85;
 }
+
+.menu-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.menu-header {
+  display: flex;
+  justify-content: space-between;
+  width: 1000px;
+  background-color: rgba(15, 22, 35, 0.849);
+  padding: 10px;
+  margin: 20px 0;
+}

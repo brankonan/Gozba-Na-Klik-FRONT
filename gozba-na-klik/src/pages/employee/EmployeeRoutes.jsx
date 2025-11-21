@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import EmployeeLayout from "../../layouts/EmployeeLayout";
-import EditProfile from "../../components/forms/EditProfile";
+import EditProfile from "../../components/forms/EditProfile/EditProfile";
 
 export default function EmployeeRoutes() {
   return (
