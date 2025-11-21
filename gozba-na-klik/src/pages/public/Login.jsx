@@ -12,21 +12,21 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  return (
-    <form
-      onSubmit={handleSubmit((formData) => handleLogin(navigate, formData))}
-    >
-      <h2>LOGIN</h2>
+  const onSubmit = (formData) => {
+    handleLogin(navigate, formData);
+  };
 
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
       <input
-        {...register("email", { required: "Obavezno polje" })}
+        {...register("email", { required: "Email je obavezan" })}
         placeholder="Email"
         type="email"
       />
       {errors.email && <p>{errors.email.message}</p>}
 
       <input
-        {...register("password", { required: "Obavezno polje" })}
+        {...register("password", { required: "Lozinka je obavezna" })}
         placeholder="Password"
         type="password"
       />
