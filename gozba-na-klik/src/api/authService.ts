@@ -2,75 +2,92 @@ import { NavigateFunction } from "react-router-dom";
 import api from "./axios";
 import axios from "axios";
 
+export type Role =
+  | "Admin"
+  | "Customer"
+  | "RestaurantOwner"
+  | "Employee"
+  | "Courier";
 
-export const loginAsync = async (email: string, password: string) => {
-    const response = await api.post("/auth/login", {
-        email: email,
-        password: password
-    });
-
-    return response.data;
+export interface UserDto {
+  id: number;
+  firstName: string;
+  lastName: string;
+  username?: string | null;
+  email: string;
+  role: Role | string;
+  profilePicture?: string | null;
 }
+
+export interface AuthResponseDto {
+  token: string;
+  user: UserDto;
+}
+
+export const loginAsync = async (
+  email: string,
+  password: string
+): Promise<AuthResponseDto> => {
+  const response = await api.post<AuthResponseDto>("/auth/login", {
+    email,
+    password,
+  });
+
+  return response.data;
+};
 
 export const logoutAsync = async () => {
-    const response = await api.post("/auth/logout");
-
-    return response.data;
-}
-
-export const handleLogout = async (navigate: NavigateFunction) => {
-    try {
-        await logoutAsync();
-    }
-    catch (error) {
-        alert("Doslo je do neocekivane greske!");
-        console.error(error);
-    }
-    finally {
-        localStorage.removeItem("user");
-        navigate("/login");
-    }
-}
+  await api.post("/auth/logout");
+};
 
 export const handleLogin = async (navigate: NavigateFunction, data: any) => {
-    try {
-        const { email, password } = data;
-        const user = await loginAsync(email, password);
-        localStorage.setItem("user", JSON.stringify(user))
+  try {
+    const { email, password } = data;
 
-        switch (user.role) {
-            case "Admin":
-                navigate(`/admin/users`);
-                break;
+    const { token, user } = await loginAsync(email, password);
 
-            case "Courier":
-                navigate(`/courier/${user.id}`);
-                break;
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
 
-            case "Employee":
-                navigate(`/employee/${user.id}`);
-                break;
-
-            case "RestaurantOwner":
-                navigate("/owner/restaurants");
-                break;
-
-            case "Customer":
-                navigate(`/customer/profile/${user.id}`);
-                break;
-
-            default:
-                navigate("/");
-        }
+    switch (user.role) {
+      case "Admin":
+        navigate("/admin/users");
+        break;
+      case "RestaurantOwner":
+        navigate("/owner/restaurants");
+        break;
+      case "Courier":
+        navigate(`/courier/${user.id}`);
+        break;
+      case "Employee":
+        navigate(`/employee/${user.id}`);
+        break;
+      case "Customer":
+      default:
+        navigate(`/customer/profile/${user.id}`);
+        break;
     }
-    catch (error) {
-        if (axios.isAxiosError(error) && error.response) {
-            if (error.response.status === 401) {
-                alert("Username or password is incorrect");
-            }
-            else {
-                alert("Unexpected error occurred");
-            }
-        }
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      if (error.response.status === 401) {
+        alert("Username ili lozinka nisu ispravni");
+      } else {
+        alert("Neocekivana greska pri logovanju");
+      }
+    } else {
+      alert("Neocekivana greska pri logovanju");
     }
-}
+  }
+};
+
+export const handleLogout = async (navigate: NavigateFunction) => {
+  try {
+    await logoutAsync();
+  } catch {
+    // ignorisi
+  } finally {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/login");
+  }
+};
