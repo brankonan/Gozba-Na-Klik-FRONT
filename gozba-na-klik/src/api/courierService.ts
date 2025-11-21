@@ -7,10 +7,14 @@ export type WeeklySchedule = {
   weeklyHours: number;
 };
 export type WeeklyScheduleUpsert = { days: DaySlot[] };
-export type CourierStatus =
-  | { status: "Active"; checkedAtLocal: string; timeZone?: string }
-  | { status: "Inactive"; checkedAtLocal: string; timeZone?: string }
-  | { status: "Suspended"; checkedAtLocal: string; timeZone?: string };
+// Dodao sam dva nova statusa i malo uredio kod AZ
+export type CourierStatus = {
+  status: "Active" | "Inactive" | "Suspended";
+  checkedAtLocal: string;
+  timeZone?: string;
+  isBusy: boolean;
+  currentOrderId?: number | null;
+};
 
 export async function ensureCourier(userId: number) {
   await api.post(`/couriers/${userId}/ensure`);
@@ -38,4 +42,40 @@ export async function suspendCourier(userId: number) {
 
 export async function unsuspendCourier(userId: number) {
   await api.delete(`/couriers/${userId}/suspend`);
+}
+
+// Novo - porudzbine AZ
+export async function pickupOrder(orderId: number, userId: number) {
+  await api.post(`/orders/${orderId}/pickup`, null, { params: { userId } });
+}
+
+export async function deliveredOrder(orderId: number, userId: number) {
+  await api.post(`/orders/${orderId}/delivered`, null, { params: { userId } });
+}
+
+// Ovo ce se verovatno ispravljati kada se uradi deo Order deo AZ
+export type OrderSummary = {
+  id: number;
+  status:
+    | "NA_CEKANJU"
+    | "OTKAZANA"
+    | "PRIHVACENA"
+    | "PREUZIMANJE_U_TOKU"
+    | "DOSTAVA_U_TOKU"
+    | "ZAVRSENA";
+  restorantName?: string;
+  readyBy?: string;
+  deliveryAddress?: {
+    street?: string;
+    city: string;
+    entrance?: string;
+    notes?: string;
+  };
+  pickedUpAt?: string;
+  deliveredAt?: string;
+  total?: number;
+};
+export async function getOrder(orderId: number) {
+  const res = await api.get<OrderSummary>(`/order/${orderId}`);
+  return res.data;
 }

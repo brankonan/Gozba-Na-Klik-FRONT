@@ -6,6 +6,7 @@ import {
   upsertSchedule,
   ensureCourier,
 } from "../../api/courierService";
+import CourierCurrentJob from "../../pages/courier/CourierCurrentJob";
 
 const dayNames = ["Ned", "Pon", "Uto", "Sre", "Čet", "Pet", "Sub"];
 
@@ -199,6 +200,8 @@ export default function CourierSchedule() {
             </button>
           </div>
         </div>
+        {/* NOVO: Dodao sam trenutni zadatak kurira AZ*/}
+        <CourierCurrentJob userId={userId} onChanged={refreshStatusNow} />
       </div>
     </main>
   );
