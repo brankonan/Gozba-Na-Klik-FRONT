@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAll } from "../../api/customerRestaurantService";
 import RestaurantsGrid from "../../components/Restaurants/RestaurantsGrid";
+import { RestaurantCarousel } from '../../components/Restaurants/TopCategoryRestaurantCarousel';
 
 const CustomerRestaurants = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -31,8 +32,9 @@ const CustomerRestaurants = () => {
   }
 
   return (
-    <div className="owner-page">
+    <div className="customer-container">
       <main className="section-container">
+        <RestaurantCarousel/>
         {loading ? (
           <p className="loading-state">Ucitavanje...</p>
         ) :
