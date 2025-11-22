@@ -15,19 +15,21 @@ const RestaurantCard = ({ restaurant }) => {
             navigate(`/customer/restaurant/${restaurant.id}/menu`, { state: restaurant });
         }
     };
-    const photoSrc = restaurant.photo
-        ? restaurant.photo.startsWith("http")
-            ? restaurant.photo
-            : `${API_ORIGIN}${restaurant.photo}`
-        : "https://via.placeholder.com/300x180?text=No+Image";
+    // const photoSrc = restaurant.photo
+    //     ? restaurant.photo.startsWith("http")
+    //         ? restaurant.photo
+    //         : `${API_ORIGIN}${restaurant.photo}`
+    //     : "https://via.placeholder.com/300x180?text=No+Image";
 
+
+    console.log(restaurant)
     return (
         <div className="restaurant-card" onClick={handleClick}>
-            <img src={photoSrc} alt={restaurant.name} />
+            <img src={restaurant.photo} alt={restaurant.name} />
 
             <div className="card-content">
                 <h3>{restaurant.name}</h3>
-                <p>ID: {restaurant.id}</p>
+                <p>{restaurant.description}</p>
             </div>
         </div>
     );

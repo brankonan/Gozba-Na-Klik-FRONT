@@ -31,7 +31,6 @@ export const LoadAllergens = ({ userId, refresh }) => {
             try {
                 const data = await getAllergensAsync(userId);
                 setAllergens(data);
-                console.log(data);
             }
             catch {
                 alert("Dogodila se greska pri ucitavanju alergena!");
