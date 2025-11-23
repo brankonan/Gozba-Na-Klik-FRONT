@@ -18,6 +18,7 @@ function getUser() {
   }
 }
 
+// Pomocna funkcija za formatiranje vremena u HH:MM AZ
 function hhmm(v) {
   if (!v) return "00:00";
   const [h, m] = String(v)
@@ -28,6 +29,7 @@ function hhmm(v) {
   ).padStart(2, "0")}`;
 }
 
+// Pomocna funkcija za racunanje sati izmedju dva HH:MM vremena AZ
 function hoursBetween(start, end) {
   const [sh, sm] = start.split(":").map((n) => parseInt(n || "0", 10));
   const [eh, em] = end.split(":").map((n) => parseInt(n || "0", 10));
@@ -93,7 +95,7 @@ export default function CourierSchedule() {
         const st = await getCourierStatus(userId);
         if (st?.status) setStatus(st.status);
       } catch {}
-    }, 60000);
+    }, 30000);
 
     return () => clearInterval(t);
   }, [userId]);
@@ -200,7 +202,6 @@ export default function CourierSchedule() {
             </button>
           </div>
         </div>
-        {/* NOVO: Dodao sam trenutni zadatak kurira AZ*/}
         <CourierCurrentJob userId={userId} onChanged={refreshStatusNow} />
       </div>
     </main>

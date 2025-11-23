@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
   getCourierStatus,
-  getOrder,
   pickupOrder,
   deliveredOrder,
 } from "../../api/courierService";
+import { getOrder } from "../../api/orderService";
 
 function getUser() {
   try {
@@ -21,6 +21,7 @@ export default function CourierCurrentJob({ userId, onChanged }) {
 
   async function refresh() {
     if (!userId) return;
+
     const st = await getCourierStatus(userId);
     setStatus(st);
 
@@ -29,6 +30,7 @@ export default function CourierCurrentJob({ userId, onChanged }) {
         const o = await getOrder(st.currentOrderId);
         setOrder(o);
       } catch {
+        // fallback ako /orders/{id} pukne iz nekog razloga AZ
         setOrder({ id: st.currentOrderId });
       }
     } else {
@@ -38,7 +40,7 @@ export default function CourierCurrentJob({ userId, onChanged }) {
 
   useEffect(() => {
     refresh();
-    const t = setInterval(refresh, 15000); // refresovace na 15 sekundi
+    const t = setInterval(refresh, 15000); // osvezavanje na 15 sekundi AZ
     return () => clearInterval(t);
   }, [userId]);
 
@@ -58,13 +60,11 @@ export default function CourierCurrentJob({ userId, onChanged }) {
 
   const canPickup =
     !!order &&
-    (!order.status ||
-      order.status === "PRIHVACENA" ||
-      order.status === "PREUZIMANJE_U_TOKU") &&
+    (order.status === "PRIHVACENA" || order.status === "PREUZIMANJE_U_TOKU") &&
     !status?.isBusy;
 
   const canDeliver =
-    !!order && (order.status === "DOSTAVA_U_TOKU" || !!status?.isBusy);
+    !!order && order.status === "DOSTAVA_U_TOKU" && !!status?.isBusy;
 
   async function handlePickup() {
     if (!order?.id) return;
@@ -72,7 +72,7 @@ export default function CourierCurrentJob({ userId, onChanged }) {
     try {
       await pickupOrder(order.id, userId);
       await refresh();
-      onChange && onChanged();
+      onChanged && onChanged();
       alert("Potvrdjeno: porudzbina preuzeta (DOSTAVA U TOKU).");
     } catch (e) {
       console.error(e);
@@ -83,7 +83,7 @@ export default function CourierCurrentJob({ userId, onChanged }) {
   }
 
   async function handleDelivery() {
-    if (!orderId?.id) return;
+    if (!order?.id) return;
     setBusy(true);
     try {
       await deliveredOrder(order.id, userId);
@@ -117,9 +117,8 @@ export default function CourierCurrentJob({ userId, onChanged }) {
         <>
           <div className="stack" style={{ gap: 6 }}>
             <div>
-              <b>Porudžbina:</b> #{order.id}
+              <b>Porudzbina:</b> #{order.id}
             </div>
-
             {order.restaurantName && (
               <div>
                 <b>Restoran:</b> {order.restaurantName}
@@ -145,13 +144,6 @@ export default function CourierCurrentJob({ userId, onChanged }) {
               </div>
             )}
 
-            {order.readyBy && (
-              <div>
-                <b>Spremno do:</b>{" "}
-                {new Date(order.readyBy).toLocaleTimeString()}
-              </div>
-            )}
-
             {order.status && (
               <div>
                 <b>Status:</b> {String(order.status).replaceAll("_", " ")}
@@ -166,7 +158,7 @@ export default function CourierCurrentJob({ userId, onChanged }) {
                 onClick={handlePickup}
                 disabled={busy}
               >
-                {busy ? "Slanje..." : "Preuzeo porudžbinu"}
+                {busy ? "Slanje..." : "Preuzeo porudzbinu"}
               </button>
             )}
 
