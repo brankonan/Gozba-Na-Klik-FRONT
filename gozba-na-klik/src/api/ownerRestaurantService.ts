@@ -35,3 +35,14 @@ export async function deleteMenuItem(restaurantId: number, menuItemId: number) {
         throw err;
     }
 }
+
+export async function createMenuItem(restaurantId: number, menuItem: MenuItem) {
+    try{
+        const result = await api.post(`owner/restaurants/${restaurantId}/menu`, menuItem);
+        return result.data;
+    }
+    catch (err) {
+        console.error("Greska pri kreiranju jelaL:", err);
+        throw err;
+    }
+}

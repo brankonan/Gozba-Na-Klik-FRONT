@@ -2,31 +2,33 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "../../styles/EditMenuItem.scss";
 
-const MenuItemForm = ({ item, onClose, onSave }) => {
+const MenuItemForm = ({ item, onClose, handleSave }) => {
 
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
             name: "",
             description: "",
             price: 0,
+            photoPath: "",
         },
     });
 
     useEffect(() => {
         reset(item);
-    }, [item]);
+    }, [item, reset]);
 
     const onSubmit = (data) => {
-        onSave({ ...item, ...data });
+        handleSave(data);
     };
 
     if (!item) return null;
+    const isEdit = !!item.id;
 
     return (
         <div className="modal-overlay">
             <div className="modal">
-                <h2>Izmeni jelo</h2>
-
+                <h2>{isEdit ? "Izmeni jelo" : "Kreiraj novo jelo"}</h2>
+                
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <label>
                         Naziv:
