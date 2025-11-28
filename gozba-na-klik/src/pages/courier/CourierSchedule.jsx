@@ -6,7 +6,7 @@ import {
   upsertSchedule,
   ensureCourier,
 } from "../../api/courierService";
-import CourierCurrentJob from "../../pages/courier/CourierCurrentJob";
+import CourierCurrentJob from "./CourierCurrentJob";
 
 const dayNames = ["Ned", "Pon", "Uto", "Sre", "Čet", "Pet", "Sub"];
 
@@ -18,7 +18,7 @@ function getUser() {
   }
 }
 
-// Pomocna funkcija za formatiranje vremena u HH:MM AZ
+// "8:5" -> "08:05", "08:5" -> "08:05", prazno -> "00:00" AZ
 function hhmm(v) {
   if (!v) return "00:00";
   const [h, m] = String(v)
@@ -29,11 +29,43 @@ function hhmm(v) {
   ).padStart(2, "0")}`;
 }
 
-// Pomocna funkcija za racunanje sati izmedju dva HH:MM vremena AZ
+// "08:00", "12:30" -> 4.5 (sati) AZ
 function hoursBetween(start, end) {
   const [sh, sm] = start.split(":").map((n) => parseInt(n || "0", 10));
   const [eh, em] = end.split(":").map((n) => parseInt(n || "0", 10));
   return eh + (em || 0) / 60 - (sh + (sm || 0) / 60);
+}
+
+// 1.5 -> "01:30", 0.4 -> "00:24" AZ
+function formatDuration(hours) {
+  const totalMinutes = Math.round(hours * 60);
+  const h = Math.floor(totalMinutes / 60);
+  const m = totalMinutes % 60;
+
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+}
+function formatHoursToHHMM(hours) {
+  if (!isFinite(hours) || hours <= 0) return "00:00";
+
+  const totalMinutes = Math.round(hours * 60); // 29.94h -> 1796 min AZ
+  const hh = Math.floor(totalMinutes / 60); // 1796 / 60 -> 29h AZ
+  const mm = totalMinutes % 60; // ostatak -> 56min AZ
+
+  return `${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`;
+}
+
+// Mapira backend status ("Active", "Inactive", "Suspended") na sprski AZ
+function translateStatus(status) {
+  switch (status) {
+    case "Active":
+      return "Aktivan";
+    case "Inactive":
+      return "Neaktivan";
+    case "Suspended":
+      return "Suspendovan";
+    default:
+      return status || "Nepoznat";
+  }
 }
 
 export default function CourierSchedule() {
@@ -44,19 +76,20 @@ export default function CourierSchedule() {
   const [days, setDays] = useState(
     Array.from({ length: 7 }, (_, i) => ({
       dayOfWeek: i,
-      start: "08:00",
-      end: "16:00",
+      start: "00:00",
+      end: "00:00",
     }))
   );
+
+  const [status, setStatus] = useState("Inactive");
+  const [busy, setBusy] = useState(false);
+
   async function refreshStatusNow() {
     try {
       const st = await getCourierStatus(userId);
       if (st?.status) setStatus(st.status);
     } catch {}
   }
-
-  const [status, setStatus] = useState("Inactive");
-  const [busy, setBusy] = useState(false);
 
   const weekly = useMemo(
     () =>
@@ -108,22 +141,28 @@ export default function CourierSchedule() {
 
   async function save() {
     for (const d of days) {
-      if (d.start >= d.end)
-        return alert(`Dan ${dayNames[d.dayOfWeek]}: start mora biti pre end.`);
+      if (d.start > d.end)
+        return alert(
+          `Dan ${dayNames[d.dayOfWeek]}: start mora biti pre kraja.`
+        );
       if (hoursBetween(d.start, d.end) > 10)
-        return alert(`Dan ${dayNames[d.dayOfWeek]}: najvise 10h dnevno.`);
+        return alert(
+          `Dan ${dayNames[d.dayOfWeek]}: najviše 10:00 radnih sati dnevno.`
+        );
     }
     if (weekly > 40)
-      return alert(`Nedeljno ${weekly.toFixed(2)}h — maksimum je 40h.`);
+      return alert(
+        `Nedeljno ${formatDuration(weekly)}h — maksimum je 40:00h nedeljno.`
+      );
 
     setBusy(true);
     try {
       await upsertSchedule(userId, { days });
-      alert("Raspored sacuvan");
+      alert("Raspored sačuvan.");
       await refreshStatusNow();
     } catch (e) {
       console.error(e);
-      alert("Greska pri cuvanju rasporeda.");
+      alert("Greška pri čuvanju rasporeda.");
     } finally {
       setBusy(false);
     }
@@ -152,7 +191,7 @@ export default function CourierSchedule() {
             <h2 style={{ margin: 0 }}>
               {routeId ? `Raspored kurira #${userId}` : "Moj raspored"}
             </h2>
-            <span style={badgeStyle}>{status}</span>
+            <span style={badgeStyle}>{translateStatus(status)}</span>
           </div>
 
           <div className="stack" style={{ gap: 12 }}>
@@ -165,22 +204,29 @@ export default function CourierSchedule() {
                 <div style={{ width: 72, fontWeight: 600 }}>
                   {dayNames[d.dayOfWeek]}
                 </div>
+
                 <label className="label">Start</label>
                 <input
-                  type="time"
+                  type="text"
                   className="input"
+                  inputMode="numeric"
+                  placeholder="00:00"
                   value={d.start}
                   onChange={(e) => setField(i, "start", e.target.value)}
                 />
-                <label className="label">End</label>
+
+                <label className="label">Kraj</label>
                 <input
-                  type="time"
+                  type="text"
                   className="input"
+                  inputMode="numeric"
+                  placeholder="00:00"
                   value={d.end}
                   onChange={(e) => setField(i, "end", e.target.value)}
                 />
+
                 <div style={{ marginLeft: "auto", opacity: 0.8 }}>
-                  {Math.max(0, hoursBetween(d.start, d.end)).toFixed(2)}h
+                  {formatDuration(Math.max(0, hoursBetween(d.start, d.end)))}h
                 </div>
               </div>
             ))}
@@ -191,17 +237,18 @@ export default function CourierSchedule() {
             style={{ justifyContent: "space-between", alignItems: "center" }}
           >
             <div style={{ fontWeight: 700 }}>
-              Ukupno nedeljno: {weekly.toFixed(2)}h / 40h
+              Ukupno nedeljno: {formatHoursToHHMM(weekly)} / 40:00h
             </div>
             <button
               className="btn btn-primary"
               onClick={save}
               disabled={busy || !userId}
             >
-              {busy ? "Cuvanje..." : "Sacuvaj"}
+              {busy ? "Čuvanje..." : "Sačuvaj"}
             </button>
           </div>
         </div>
+
         <CourierCurrentJob userId={userId} onChanged={refreshStatusNow} />
       </div>
     </main>

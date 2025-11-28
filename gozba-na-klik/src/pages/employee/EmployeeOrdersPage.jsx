@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  getPendingOrders,
-  acceptOrder,
-  rejectOrder,
-} from "../../api/orderService";
+import { acceptOrder, rejectOrder } from "../../api/orderService";
+import { getEmployeePendingOrders } from "../../api/employeeOrderService";
 
 export default function EmployeeOrdersPage() {
   const [orders, setOrders] = useState([]);
@@ -11,11 +8,19 @@ export default function EmployeeOrdersPage() {
   const [actionId, setActionId] = useState(null);
   const [error, setError] = useState(null);
 
+  const raw = localStorage.getItem("user");
+  const user = raw ? JSON.parse(raw) : null;
+
   async function loadOrders() {
+    if (!user) {
+      setError("Niste prijavljeni.");
+      return;
+    }
+
     setLoading(true);
     setError(null);
     try {
-      const data = await getPendingOrders();
+      const data = await getEmployeePendingOrders(user.id);
       setOrders(data);
     } catch (e) {
       console.error(e);
@@ -26,6 +31,7 @@ export default function EmployeeOrdersPage() {
   }
 
   useEffect(() => {
+    console.log("EmployeeOrdersPage MOUNTED");
     loadOrders();
   }, []);
 
@@ -59,14 +65,26 @@ export default function EmployeeOrdersPage() {
 
   const isBusy = (id) => loading || actionId === id;
 
+  if (!user) {
+    return (
+      <main className="section">
+        <div className="container" style={{ maxWidth: 960 }}>
+          <div className="card card-pad">
+            Morate biti prijavljeni kao zaposleni da biste videli porudzbine.
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="section">
       <div className="container" style={{ maxWidth: 960 }}>
         <div className="card card-pad stack" style={{ gap: 16 }}>
           <div className="row" style={{ justifyContent: "space-between" }}>
-            <h2 style={{ margin: 0 }}>Porudzbine na cekanju</h2>
+            <h2 style={{ margin: 0 }}>Porudžbine na čekanju</h2>
             {loading && (
-              <span style={{ fontSize: 14, opacity: 0.8 }}>Ucitavanje...</span>
+              <span style={{ fontSize: 14, opacity: 0.8 }}>Učitavanje...</span>
             )}
           </div>
 
@@ -74,7 +92,8 @@ export default function EmployeeOrdersPage() {
 
           {orders.length === 0 && !loading ? (
             <div style={{ opacity: 0.8 }}>
-              Trenutno nema porudzbina u statusu <b>NA_CEKANJU</b>.
+              Trenutno nema porudžbina u statusu <b>NA_CEKANJU</b> za vaš
+              restoran.
             </div>
           ) : (
             <div className="table-wrapper">
@@ -94,9 +113,9 @@ export default function EmployeeOrdersPage() {
                   {orders.map((o) => (
                     <tr key={o.id}>
                       <td>#{o.id}</td>
-                      <td>{o.restaurantId}</td>
-                      <td>{o.customerId}</td>
-                      <td>{o.addressId}</td>
+                      <td>{o.restaurantName ?? o.restaurantId}</td>
+                      <td>{o.customerName ?? o.customerId}</td>
+                      <td>{o.addressText ?? o.addressId}</td>
                       <td>
                         {o.total != null
                           ? `${Number(o.total).toFixed(2)} RSD`
@@ -113,7 +132,7 @@ export default function EmployeeOrdersPage() {
                           {actionId === o.id ? "Slanje..." : "Prihvati"}
                         </button>
                         <button
-                          className="btn btn-danger"
+                          className="btn btn-delete"
                           onClick={() => handleReject(o.id)}
                           disabled={isBusy(o.id)}
                         >
@@ -129,7 +148,7 @@ export default function EmployeeOrdersPage() {
 
           <div className="row" style={{ justifyContent: "flex-end" }}>
             <button className="btn" onClick={loadOrders} disabled={loading}>
-              Osvezi listu
+              Osveži listu
             </button>
           </div>
         </div>

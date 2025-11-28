@@ -33,7 +33,7 @@ export const handleLogin = async (navigate: NavigateFunction, data: any) => {
         navigate("/courier/schedule");
         break;
       case "Employee":
-        navigate(`/employee/${u.id}`);
+        navigate(`/employee/orders`);
         break;
       case "RestaurantOwner":
         navigate("/owner/restaurants");

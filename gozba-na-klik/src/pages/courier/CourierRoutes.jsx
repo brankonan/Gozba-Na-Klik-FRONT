@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import CourierLayout from "../../layouts/CourierLayout";
 import EditProfile from "../../components/forms/EditProfile/EditProfile";
-import CourierSchedule from "../../components/forms/CourierSchedule";
+import CourierSchedule from "./CourierSchedule";
 
 export default function CourierRoutes() {
   return (

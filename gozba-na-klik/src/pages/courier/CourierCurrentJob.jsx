@@ -6,16 +6,42 @@ import {
 } from "../../api/courierService";
 import { getOrder } from "../../api/orderService";
 
-function getUser() {
-  try {
-    return JSON.parse(localStorage.getItem("user") || "null");
-  } catch {
-    return null;
+// Mapiranje statusa kurira na srpski AZ
+function courierStatusLabel(status) {
+  switch (status) {
+    case "Active":
+      return "Aktivan";
+    case "Inactive":
+      return "Neaktivan";
+    case "Suspended":
+      return "Suspendovan";
+    default:
+      return status || "—";
+  }
+}
+
+// Mapiranje statusa porudžbine na lep srpski AZ
+function orderStatusLabel(status) {
+  switch (status) {
+    case "NA_CEKANJU":
+      return "Na čekanju";
+    case "OTKAZANA":
+      return "Otkazana";
+    case "PRIHVACENA":
+      return "Prihvaćena";
+    case "PREUZIMANJE_U_TOKU":
+      return "Preuzimanje u toku";
+    case "DOSTAVA_U_TOKU":
+      return "Dostava u toku";
+    case "ZAVRSENA":
+      return "Završena";
+    default:
+      return String(status || "—").replaceAll("_", " ");
   }
 }
 
 export default function CourierCurrentJob({ userId, onChanged }) {
-  const [status, setStatus] = useState(null);
+  const [status, setStatus] = useState(null); // { status, isBusy, currentOrderId } AZ
   const [order, setOrder] = useState(null);
   const [busy, setBusy] = useState(false);
 
@@ -23,15 +49,22 @@ export default function CourierCurrentJob({ userId, onChanged }) {
     if (!userId) return;
 
     const st = await getCourierStatus(userId);
-    setStatus(st);
 
-    if (st && st.currentOrderId) {
+    const normalized = st
+      ? {
+          ...st,
+          isBusy: st.isBusy ?? !!st.currentOrderId, // fallback ako backend ne vrati isBusy AZ
+        }
+      : null;
+
+    setStatus(normalized);
+
+    if (normalized && normalized.currentOrderId) {
       try {
-        const o = await getOrder(st.currentOrderId);
+        const o = await getOrder(normalized.currentOrderId);
         setOrder(o);
       } catch {
-        // fallback ako /orders/{id} pukne iz nekog razloga AZ
-        setOrder({ id: st.currentOrderId });
+        setOrder({ id: normalized.currentOrderId });
       }
     } else {
       setOrder(null);
@@ -40,11 +73,13 @@ export default function CourierCurrentJob({ userId, onChanged }) {
 
   useEffect(() => {
     refresh();
-    const t = setInterval(refresh, 15000); // osvezavanje na 15 sekundi AZ
+    const t = setInterval(refresh, 15000);
     return () => clearInterval(t);
   }, [userId]);
 
   if (!userId) return null;
+
+  const isBusy = !!status?.isBusy;
 
   const badgeStyle = {
     padding: "2px 8px",
@@ -58,13 +93,18 @@ export default function CourierCurrentJob({ userId, onChanged }) {
         : "#6b7280",
   };
 
+  // Kurir može da potvrdi preuzimanje kad: AZ
+  // - ima porudžbinu
+  // - status porudžbine je PRIHVACENA ili PREUZIMANJE_U_TOKU
+  // (ne uslovljavamo više sa !isBusy, jer backend već rešava da nema više porudžbina)
   const canPickup =
     !!order &&
-    (order.status === "PRIHVACENA" || order.status === "PREUZIMANJE_U_TOKU") &&
-    !status?.isBusy;
+    (order.status === "PRIHVACENA" || order.status === "PREUZIMANJE_U_TOKU");
 
-  const canDeliver =
-    !!order && order.status === "DOSTAVA_U_TOKU" && !!status?.isBusy;
+  // Kurir može da potvrdi dostavu kad: AZ
+  // - ima porudžbinu
+  // - status porudžbine je DOSTAVA_U_TOKU
+  const canDeliver = !!order && order.status === "DOSTAVA_U_TOKU";
 
   async function handlePickup() {
     if (!order?.id) return;
@@ -73,10 +113,10 @@ export default function CourierCurrentJob({ userId, onChanged }) {
       await pickupOrder(order.id, userId);
       await refresh();
       onChanged && onChanged();
-      alert("Potvrdjeno: porudzbina preuzeta (DOSTAVA U TOKU).");
+      alert("Potvrđeno: porudžbina preuzeta (DOSTAVA U TOKU).");
     } catch (e) {
       console.error(e);
-      alert("Greska pri potvrdi preuzimanja.");
+      alert("Greška pri potvrdi preuzimanja.");
     } finally {
       setBusy(false);
     }
@@ -89,10 +129,10 @@ export default function CourierCurrentJob({ userId, onChanged }) {
       await deliveredOrder(order.id, userId);
       await refresh();
       onChanged && onChanged();
-      alert("Potvrdjeno: porudzbina dostavljena (ZAVRSENA).");
+      alert("Potvrđeno: porudžbina dostavljena (ZAVRŠENA).");
     } catch (e) {
       console.error(e);
-      alert("Greska pri potvrdi dostave.");
+      alert("Greška pri potvrdi dostave.");
     } finally {
       setBusy(false);
     }
@@ -106,19 +146,20 @@ export default function CourierCurrentJob({ userId, onChanged }) {
       >
         <h3 style={{ margin: 0 }}>Trenutni zadatak</h3>
         <span style={badgeStyle}>
-          {status?.status ?? "—"}
-          {status?.isBusy ? " · U dostavi" : ""}
+          {courierStatusLabel(status?.status)}
+          {isBusy ? " · U dostavi" : ""}
         </span>
       </div>
 
       {!order ? (
-        <div style={{ opacity: 0.8 }}>Nema dodeljenih porudzbina trenutno.</div>
+        <div style={{ opacity: 0.8 }}>Nema dodeljenih porudžbina trenutno.</div>
       ) : (
         <>
           <div className="stack" style={{ gap: 6 }}>
             <div>
-              <b>Porudzbina:</b> #{order.id}
+              <b>Porudžbina:</b> #{order.id}
             </div>
+
             {order.restaurantName && (
               <div>
                 <b>Restoran:</b> {order.restaurantName}
@@ -146,7 +187,7 @@ export default function CourierCurrentJob({ userId, onChanged }) {
 
             {order.status && (
               <div>
-                <b>Status:</b> {String(order.status).replaceAll("_", " ")}
+                <b>Status porudžbine:</b> {orderStatusLabel(order.status)}
               </div>
             )}
           </div>
@@ -158,7 +199,7 @@ export default function CourierCurrentJob({ userId, onChanged }) {
                 onClick={handlePickup}
                 disabled={busy}
               >
-                {busy ? "Slanje..." : "Preuzeo porudzbinu"}
+                {busy ? "Slanje..." : "Preuzeo porudžbinu"}
               </button>
             )}
 
@@ -173,7 +214,7 @@ export default function CourierCurrentJob({ userId, onChanged }) {
 
       <div className="row" style={{ justifyContent: "flex-end" }}>
         <button className="btn" onClick={refresh} disabled={busy}>
-          Osvezi
+          Osveži
         </button>
       </div>
     </div>

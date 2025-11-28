@@ -24,6 +24,9 @@ export interface OrderDto {
   total: number;
   status: OrderStatus;
   items: OrderItemDto[];
+
+  createdAt: string;
+  restorantName?: string;
 }
 
 // Ovo odgovara CreateOrderDto sa backend-a AZ
@@ -58,4 +61,11 @@ export async function acceptOrder(orderId: number) {
 
 export async function rejectOrder(orderId: number, reason?: string) {
   await api.post(`/orders/${orderId}/reject`, reason ? { reason } : {});
+}
+
+export async function getCustomerOrders(customerId: number) {
+  const res = await api.get<OrderDto[]>("/orders", {
+    params: { customerId },
+  });
+  return res.data;
 }
