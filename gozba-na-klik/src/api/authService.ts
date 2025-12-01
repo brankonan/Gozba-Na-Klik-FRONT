@@ -1,6 +1,7 @@
 import { NavigateFunction } from "react-router-dom";
 import api from "./axios";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export type Role =
   | "Admin"
@@ -24,6 +25,15 @@ export interface AuthResponseDto {
   user: UserDto;
 }
 
+export interface ResetRequestDto {
+  email: string;
+}
+
+export interface ResetConfirmDto {
+  token: string;
+  newPassword: string;
+}
+
 export const loginAsync = async (
   email: string,
   password: string
@@ -40,6 +50,29 @@ export const logoutAsync = async () => {
   await api.post("/auth/logout");
 };
 
+export const activateAccountAsync = async (token: string) => {
+  const response = await api.get("/auth/activate", {
+    params: { token },
+  });
+
+  return response.data as { message?: string };
+};
+
+export const requestPasswordResetAsync = async (email: string) => {
+  const payload: ResetRequestDto = { email };
+  const response = await api.post("/auth/reset/request", payload);
+  return response.data as { message?: string };
+};
+
+export const resetPasswordAsync = async (
+  token: string,
+  newPassword: string
+) => {
+  const payload: ResetConfirmDto = { token, newPassword };
+  const response = await api.post("/auth/reset/confirm", payload);
+  return response.data as { message?: string };
+};
+
 export const handleLogin = async (navigate: NavigateFunction, data: any) => {
   try {
     const { email, password } = data;
@@ -48,6 +81,8 @@ export const handleLogin = async (navigate: NavigateFunction, data: any) => {
 
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(user));
+
+    toast.success("Uspešna prijava!");
 
     switch (user.role) {
       case "Admin":
@@ -70,12 +105,12 @@ export const handleLogin = async (navigate: NavigateFunction, data: any) => {
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       if (error.response.status === 401) {
-        alert("Username ili lozinka nisu ispravni");
+        toast.error("Email ili lozinka nisu ispravni");
       } else {
-        alert("Neocekivana greska pri logovanju");
+        toast.error("Neočekivana greška pri prijavi");
       }
     } else {
-      alert("Neocekivana greska pri logovanju");
+      toast.error("Neočekivana greška pri prijavi");
     }
   }
 };
@@ -83,6 +118,7 @@ export const handleLogin = async (navigate: NavigateFunction, data: any) => {
 export const handleLogout = async (navigate: NavigateFunction) => {
   try {
     await logoutAsync();
+    toast.info("Uspešno odjavljivanje");
   } catch {
     // ignorisi
   } finally {
