@@ -527,7 +527,53 @@ p {
   padding: 10px;
   margin: 20px 0;
 }
+.btn-loading {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
 
-main {
-  padding: 20px 35px;
+.loader {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  border-top-color: white;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.input.error {
+  border-color: #e63946;
+}
+
+.input.success {
+  border-color: #2a9d8f;
+}
+
+.card {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card a {
+  color: #5cff8d;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+.card a:hover {
+  opacity: 0.8;
 }
