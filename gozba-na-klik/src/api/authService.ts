@@ -38,16 +38,13 @@ export const loginAsync = async (
   email: string,
   password: string
 ): Promise<AuthResponseDto> => {
-  const response = await api.post<AuthResponseDto>("/auth/login", {
+  const { data } = await api.post<AuthResponseDto>("/auth/login", {
     email,
     password,
   });
 
-  return response.data;
-export const loginAsync = async (email: string, password: string) => {
-  const { data } = await api.post("/auth/login", { email, password }); // { token, user }
-  // podeseni Authorization za sve naredne pozive
   api.defaults.headers.common.Authorization = `Bearer ${data.token}`;
+
   return data;
 };
 
@@ -84,17 +81,16 @@ export const handleLogin = async (navigate: NavigateFunction, data: any) => {
     const { email, password } = data;
 
     const auth = await loginAsync(email, password); // { token, user }
-    const u = auth.user;
+    const { token, user } = auth;
 
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(user));
 
-    toast.success("Uspešna prijava!");
-    // cuva oba: radi kompatibilnosti
     localStorage.setItem("auth", JSON.stringify(auth));
-    localStorage.setItem("user", JSON.stringify(u));
 
-    switch (u.role) {
+    toast.success("Uspešna prijava!");
+
+    switch (user.role) {
       case "Admin":
         navigate("/admin/users");
         break;
@@ -102,18 +98,18 @@ export const handleLogin = async (navigate: NavigateFunction, data: any) => {
         navigate("/courier/schedule");
         break;
       case "Employee":
-        navigate(`/employee/orders`);
+        navigate("/employee/orders");
         break;
       case "RestaurantOwner":
         navigate("/owner/restaurants");
         break;
       case "Customer":
-        navigate(`/customer/profile/${u.id}`);
+        navigate(`/customer/profile/${user.id}`);
         break;
       default:
         navigate("/");
     }
-  } catch (error) {
+  } catch (error: any) {
     if (axios.isAxiosError(error) && error.response) {
       if (error.response.status === 401) {
         toast.error("Email ili lozinka nisu ispravni");
@@ -122,11 +118,7 @@ export const handleLogin = async (navigate: NavigateFunction, data: any) => {
       }
     } else {
       toast.error("Neočekivana greška pri prijavi");
-      alert(
-        error.response.status === 401
-          ? "Username or password is incorrect"
-          : "Unexpected error occurred"
-      );
+      console.error(error);
     }
   }
 };
@@ -135,14 +127,12 @@ export const handleLogout = async (navigate: NavigateFunction) => {
   try {
     await logoutAsync();
     toast.info("Uspešno odjavljivanje");
-  } catch {
-    // ignorisi
   } catch (error) {
-    alert("Doslo je do neocekivane greske!");
     console.error(error);
   } finally {
     localStorage.removeItem("auth");
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
     delete api.defaults.headers.common.Authorization;
     navigate("/login");
   }
