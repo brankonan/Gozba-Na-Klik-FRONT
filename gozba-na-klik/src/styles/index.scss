@@ -18,13 +18,21 @@ body {
 body::before {
   content: "";
   position: fixed;
-  inset: 0 0 auto 0;
-  height: 70vh;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
-    url("/src/images/ai-generated-assorted-indian-food-on-dark-wooden-background-free-photo.jpg")
-      center/cover no-repeat;
+  inset: 0; /* pokrij ceo ekran, gore + dole */
+  /* bez height: 70vh; */
+
+  background:
+    /* tamni overlay da se UI lepo čita */ linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.55) 0%,
+      rgba(0, 0, 0, 0.4) 35%,
+      rgba(0, 0, 0, 0.8) 100%
+    ),
+    url("/src/images/backgroundPicture.png") center center / cover no-repeat;
+
   z-index: -1;
 }
+
 img {
   max-width: 100%;
   display: block;
@@ -64,6 +72,22 @@ p {
 }
 .section {
   padding: 16px 0;
+}
+
+main.section {
+  /* zauzmi skoro ceo ekran ispod navbara */
+  min-height: calc(100vh - 72px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 16px;
+}
+
+/* container koji je odmah u main.section (login, register...) */
+main.section > .container {
+  width: 100%;
+  max-width: 520px;
+  justify-content: center;
 }
 .links {
   display: flex;
@@ -185,6 +209,11 @@ p {
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.12s, opacity 0.2s, background 0.2s, border-color 0.2s;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 .btn:active {
   transform: translateY(1px);
@@ -304,10 +333,11 @@ p {
 
 /* === Cards/Tables/Badges === */
 .card {
-  background: rgba(15, 22, 35, 0.85);
+  background: radial-gradient(circle at top left, #111827 0, #020617 60%);
+  border-radius: 18px;
   border: 1px solid #253044;
-  border-radius: 12px;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.95);
 }
 .card-pad {
   padding: 16px;
@@ -354,6 +384,53 @@ p {
   background: #0f1520;
   border: 1px solid #253044;
   color: #c9d3e3;
+}
+
+/* auth / forme u karticama */
+
+.card h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #e5e7eb;
+}
+
+.card .help {
+  font-size: 0.9rem;
+  color: #9ca3af;
+}
+
+/* === Auth forme: login + register (kartice u main.section) === */
+
+main.section .card {
+  /* već imaš globalni stil za .card, ovo ga samo malo “pooštri”
+     za auth ekrane – gradient, blur i senka su već podešeni gore */
+  border-radius: 18px;
+}
+
+/* forma koja koristi .stack unutar auth kartice */
+main.section .card form.stack {
+  margin-top: 12px;
+  gap: 14px; /* malo više “air” između polja */
+}
+
+/* red sa dugmetom "Registruj se" + link "Prijava" */
+main.section .card form.stack > .row {
+  margin-top: 4px;
+  justify-content: space-between;
+}
+
+/* naslov i opis u auth karticama (login + register) */
+main.section .card h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #e5e7eb;
+}
+
+main.section .card .help {
+  font-size: 0.9rem;
+  color: #9ca3af;
 }
 
 /* === Owner page (kartice) === */
@@ -527,9 +604,11 @@ p {
   padding: 10px;
   margin: 20px 0;
 }
+
 .btn-loading {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
 }
 

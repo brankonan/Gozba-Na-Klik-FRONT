@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { getMostRecentRestaurants, getFavouriteRestaurants, getTopRatedRestaurants, } from '../../api/customerRestaurantService';
-import '../../styles/carousel.scss';
-import RestaurantCarouselCard from './RestaurantCarouselCard';
+import React, { useEffect, useState } from "react";
+import {
+  getMostRecentRestaurants,
+  getFavouriteRestaurants,
+  getTopRatedRestaurants,
+} from "../../api/customerRestaurantService";
+import "../../styles/carousel.scss";
+import RestaurantCarouselCard from "./RestaurantCarouselCard";
+import "../../styles/Restaurant.scss";
 
 const categories = [
-  { key: 'mostRecent', label: 'Poslednji' },
-  { key: 'favourites', label: 'Omiljeni' },
-  { key: 'topRated', label: 'Najbolje ocenjeni' },
+  { key: "mostRecent", label: "Poslednji" },
+  { key: "favourites", label: "Omiljeni" },
+  { key: "topRated", label: "Najbolje ocenjeni" },
 ];
 
 export function RestaurantCarousel() {
@@ -22,31 +27,27 @@ export function RestaurantCarousel() {
 
   useEffect(() => {
     async function loadData() {
-
       try {
         setLoading(true);
         setError(null);
 
-        const userId = JSON.parse(localStorage.getItem('user')).id;
+        const userId = JSON.parse(localStorage.getItem("user")).id;
 
-        const [mostRecent, favourites, topRated,] =
-          await Promise.all([
-            getMostRecentRestaurants(userId),
-            getFavouriteRestaurants(userId),
-            getTopRatedRestaurants(),
-          ]);
+        const [mostRecent, favourites, topRated] = await Promise.all([
+          getMostRecentRestaurants(userId),
+          getFavouriteRestaurants(userId),
+          getTopRatedRestaurants(),
+        ]);
 
         setData({
           mostRecent,
           favourites,
           topRated,
         });
-
       } catch (err) {
         console.error(err);
-        setError('Doslo je do greske pri ucitavanju restorana.');
-      }
-      finally {
+        setError("Doslo je do greske pri ucitavanju restorana.");
+      } finally {
         setLoading(false);
       }
     }
@@ -59,7 +60,9 @@ export function RestaurantCarousel() {
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + categories.length) % categories.length);
+    setCurrentIndex(
+      (prev) => (prev - 1 + categories.length) % categories.length
+    );
   };
 
   const currentCategory = categories[currentIndex];
@@ -102,7 +105,7 @@ export function RestaurantCarousel() {
       {!loading && !error && (
         <div className="restaurant-carousel__list">
           {restaurants.map((r) => (
-            <RestaurantCarouselCard key={r.id} restaurant={r}/>
+            <RestaurantCarouselCard key={r.id} restaurant={r} />
           ))}
 
           {restaurants.length === 0 && (
@@ -115,7 +118,6 @@ export function RestaurantCarousel() {
     </div>
   );
 }
-
 
 // import React from "react";
 

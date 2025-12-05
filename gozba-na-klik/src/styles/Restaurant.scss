@@ -1,0 +1,396 @@
+/* ============================
+   RESTAURANTS – GLOBAL STIL
+   (RestaurantCard, Grid, Carousel, Menu)
+   ============================ */
+
+/* GRID ZA RESTORANE (RestaurantsGrid + RestaurantCard) */
+
+.restaurants-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+  margin-top: 26px;
+}
+
+/* Jedna kartica sa restoranom */
+
+.restaurant-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  background: radial-gradient(circle at top left, #020617 0, #020617 70%);
+  border: 1px solid #1e293b;
+  color: #e9edf7;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.95);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease,
+    background 0.2s ease, filter 0.2s ease;
+}
+
+/* spoljašnji glow okvir */
+
+.restaurant-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.6);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, box-shadow 0.25s ease, border-color 0.2s ease;
+}
+
+/* slika */
+
+.restaurant-card img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid rgba(37, 48, 68, 0.95);
+  filter: brightness(0.9) saturate(1.06);
+  transform: scale(1.02);
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+/* blagi gradient preko slike da sadržaj ispod ne “šljašti” previše */
+
+.restaurant-card img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.2) 60%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  pointer-events: none;
+}
+
+.restaurant-card .card-content {
+  padding: 14px 16px 16px;
+  display: grid;
+  gap: 6px;
+}
+
+.restaurant-card .card-content h3 {
+  margin: 0;
+  font-size: 1.04rem;
+  font-weight: 650;
+  color: #f9fafb;
+  letter-spacing: 0.02em;
+}
+
+.restaurant-card .card-content p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #cbd5f5;
+  opacity: 0.9;
+  line-height: 1.45;
+}
+
+/* Hover efekat */
+
+.restaurant-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(92, 255, 141, 0.75);
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.98),
+    0 0 30px rgba(34, 197, 94, 0.55);
+  background: radial-gradient(circle at top left, #020617 0, #020617 80%);
+  filter: saturate(1.05);
+}
+
+.restaurant-card:hover::before {
+  opacity: 1;
+  border-color: rgba(94, 234, 212, 0.55);
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.95), 0 0 32px rgba(34, 197, 94, 0.45);
+}
+
+.restaurant-card:hover img {
+  transform: scale(1.08);
+  filter: brightness(1.02) saturate(1.12);
+}
+
+/* ============================
+   CAROUSEL – RestaurantCarousel & RestaurantCarouselCard
+   ============================ */
+
+.restaurant-carousel {
+  margin-top: 42px;
+  display: grid;
+  gap: 18px;
+}
+
+.restaurant-carousel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.restaurant-carousel__header h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e5e7eb;
+}
+
+/* dugmići za prev / next */
+
+.restaurant-carousel__controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-carousel {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.9);
+  background: radial-gradient(circle at top, #020617 0, #020617 80%);
+  color: #e5e7eb;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease,
+    transform 0.12s ease, box-shadow 0.18s ease;
+}
+
+.btn-carousel:hover {
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  border-color: rgba(74, 222, 128, 1);
+  box-shadow: 0 0 18px rgba(34, 197, 94, 0.75);
+  transform: translateY(-1px);
+}
+
+/* status poruke u karuselu */
+
+.restaurant-carousel__status {
+  font-size: 0.95rem;
+  color: #e5e7eb;
+  opacity: 0.9;
+}
+
+.restaurant-carousel__status--error {
+  color: #fecaca;
+}
+
+/* lista kartica u karuselu */
+
+.restaurant-carousel__list {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+/* prazno stanje */
+
+.restaurant-carousel__empty {
+  padding: 20px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #9ca3af;
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 16px;
+  border: 1px solid #253044;
+}
+
+/* Kartica u karuselu */
+
+.restaurant-carousel-card {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(37, 48, 68, 0.95);
+  box-shadow: 0 18px 46px rgba(15, 23, 42, 0.98);
+  cursor: pointer;
+  background: #020617;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.restaurant-carousel-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.9) saturate(1.05);
+  transform: scale(1.02);
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* tamni gradient preko slike */
+
+.restaurant-carousel-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.96) 0%,
+    rgba(0, 0, 0, 0.45) 55%,
+    rgba(0, 0, 0, 0.06) 100%
+  );
+  pointer-events: none;
+}
+
+/* overlay sa imenom restorana */
+
+.restaurant-carousel-card h2 {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  margin: 0;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.96);
+  border: 1px solid rgba(148, 163, 184, 0.85);
+  color: #f9fafb;
+  font-size: 1rem;
+  font-weight: 650;
+  text-shadow: 0 0 14px rgba(0, 0, 0, 0.95);
+  letter-spacing: 0.03em;
+}
+
+/* hover – zoom + glow */
+
+.restaurant-carousel-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(92, 255, 141, 0.75);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.98),
+    0 0 28px rgba(34, 197, 94, 0.5);
+}
+
+.restaurant-carousel-card:hover img {
+  transform: scale(1.09);
+  filter: brightness(1.02) saturate(1.12);
+}
+
+/* ============================
+   MENU – RestaurantMenu (jela)
+   ============================ */
+
+.menu-container {
+  margin-top: 30px;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+/* Kartica jednog jela */
+
+.menuItem-card {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto auto auto auto;
+  gap: 6px;
+  padding: 12px 12px 14px;
+  border-radius: 18px;
+  background: radial-gradient(circle at top left, #020617 0, #020617 70%);
+  border: 1px solid #1f2937;
+  box-shadow: 0 18px 46px rgba(15, 23, 42, 0.95);
+  color: #e5e7eb;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+/* unutrašnji glow okvir */
+
+.menuItem-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.menuItem-card img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid rgba(37, 48, 68, 0.95);
+  margin-bottom: 6px;
+  filter: brightness(0.96) saturate(1.07);
+  transform: scale(1.01);
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.menuItem-card .name {
+  font-weight: 650;
+  font-size: 1rem;
+  color: #f9fafb;
+  letter-spacing: 0.01em;
+}
+
+.menuItem-card .description {
+  font-size: 0.9rem;
+  color: #cbd5f5;
+  opacity: 0.94;
+  line-height: 1.45;
+}
+
+.menuItem-card .price {
+  margin-top: 4px;
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: #5cff8d;
+  letter-spacing: 0.04em;
+}
+
+/* dugmići ispod – edit/delete ili "Dodaj u korpu" */
+
+.menuItem-card .actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* Hover – malo "iskače" kartica */
+
+.menuItem-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(92, 255, 141, 0.75);
+  background: radial-gradient(circle at top left, #020617 0, #020617 80%);
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.98),
+    0 0 28px rgba(34, 197, 94, 0.45);
+}
+
+.menuItem-card:hover::before {
+  opacity: 1;
+  border-color: rgba(94, 234, 212, 0.55);
+  box-shadow: 0 0 32px rgba(34, 197, 94, 0.4);
+}
+
+.menuItem-card:hover img {
+  transform: scale(1.06);
+  filter: brightness(1.03) saturate(1.14);
+}
+
+/* ============================
+   RESPONSIVE FINESSE
+   ============================ */
+
+@media (max-width: 640px) {
+  .restaurant-carousel__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .menuItem-card img {
+    height: 150px;
+  }
+}

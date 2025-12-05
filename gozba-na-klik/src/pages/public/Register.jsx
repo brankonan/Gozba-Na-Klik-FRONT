@@ -30,14 +30,21 @@ export default function Register() {
 
   const onSubmit = async (data) => {
     try {
-      const { firstName, lastName, username, email, password, confirmPassword } = data;
+      const {
+        firstName,
+        lastName,
+        username,
+        email,
+        password,
+        confirmPassword,
+      } = data;
       await api.post("/Auth/register", {
         firstName,
         lastName,
         username,
         email,
         password,
-        confirmPassword
+        confirmPassword,
       });
       navigate("/login");
     } catch (e) {
@@ -53,11 +60,11 @@ export default function Register() {
 
           <form onSubmit={handleSubmit(onSubmit)} noValidate className="stack">
             <div>
-              <label className="label">First name</label>
+              <label className="label">Ime</label>
               <input
                 className="input"
                 {...register("firstName", { required: "Obavezno polje" })}
-                placeholder="npr. Vuk"
+                placeholder="npr. Marko"
               />
               {errors.firstName && (
                 <span className="error">{errors.firstName.message}</span>
@@ -65,11 +72,11 @@ export default function Register() {
             </div>
 
             <div>
-              <label className="label">Last name</label>
+              <label className="label">Prezime</label>
               <input
                 className="input"
                 {...register("lastName", { required: "Obavezno polje" })}
-                placeholder="npr. Karadžić"
+                placeholder="npr. Marković"
               />
               {errors.lastName && (
                 <span className="error">{errors.lastName.message}</span>
@@ -77,11 +84,11 @@ export default function Register() {
             </div>
 
             <div>
-              <label className="label">Username</label>
+              <label className="label">Korisničko ime</label>
               <input
                 className="input"
                 {...register("username", { required: "Obavezno polje" })}
-                placeholder="npr. Debilovanovic"
+                placeholder="npr. marko.markovic"
               />
               {errors.lastName && (
                 <span className="error">{errors.username.message}</span>
@@ -108,7 +115,7 @@ export default function Register() {
             </div>
 
             <div>
-              <label className="label">Password</label>
+              <label className="label">Šifra</label>
               <input
                 className="input"
                 type="password"

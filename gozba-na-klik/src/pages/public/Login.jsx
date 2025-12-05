@@ -76,7 +76,7 @@ const Login = () => {
               type="button"
               onClick={() => navigate("/")}
             >
-              Pocetna
+              Početna
             </button>
           </form>
 

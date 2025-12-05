@@ -4,14 +4,25 @@ import { toast } from "react-toastify";
 import { createOrder } from "../api/orderService";
 import { getAddressesAsync } from "../api/addressService";
 
-const CartPopup = ({ cart, restaurant, user, onCancel }) => {
+const CartPopup = ({ cart, restaurant, user, onCancel, onRemoveItem }) => {
   const [addresses, setAddresses] = useState([]);
   const [selectedAddressId, setSelectedAddressId] = useState("");
   const [loadingAddresses, setLoadingAddresses] = useState(false);
+  const [closing, setClosing] = useState(false);
 
   const total = cart.reduce((sum, i) => sum + i.price, 0);
   const delivery = cart.length > 0 ? 200 : 0;
   const finalTotal = total + delivery;
+
+  // helper za zatvaranje sa animacijom
+  const handleClose = () => {
+    if (closing) return;
+    setClosing(true);
+
+    setTimeout(() => {
+      if (onCancel) onCancel();
+    }, 220); // trajanje animacije u ms
+  };
 
   // Učitavanje adresa korisnika
   useEffect(() => {
@@ -35,7 +46,7 @@ const CartPopup = ({ cart, restaurant, user, onCancel }) => {
     }
 
     loadAddresses();
-  }, [user?.id]);
+  }, [user?.id, selectedAddressId]);
 
   // Rukovanje porudžbinom
   const handleOrder = async () => {
@@ -82,6 +93,9 @@ const CartPopup = ({ cart, restaurant, user, onCancel }) => {
 
       toast.success(`Porudžbina #${result.id} uspešno kreirana!`);
       console.log("Order created:", result);
+
+      // zatvori popup posle uspešne porudžbine
+      handleClose();
     } catch (err) {
       console.error(err);
       toast.error("Došlo je do greške pri poručivanju!");
@@ -89,7 +103,7 @@ const CartPopup = ({ cart, restaurant, user, onCancel }) => {
   };
 
   return (
-    <div className="cart-popup">
+    <div className={`cart-popup ${closing ? "cart-popup--closing" : ""}`}>
       <div className="cart-content">
         <h2>Brza kupovina</h2>
 
@@ -98,9 +112,20 @@ const CartPopup = ({ cart, restaurant, user, onCancel }) => {
         ) : (
           <ul>
             {cart.map((item, idx) => (
-              <li key={idx}>
+              <li key={item.id ?? idx}>
                 <span>{item.name}</span>
-                <span>{item.price.toFixed(2)} RSD</span>
+                <span className="cart-item-price">
+                  {item.price.toFixed(2)} RSD
+                </span>
+                {/* X dugme za izbacivanje jela */}
+                <button
+                  type="button"
+                  className="cart-item-remove"
+                  onClick={() => onRemoveItem?.(item, idx)}
+                  aria-label="Ukloni iz korpe"
+                >
+                  ×
+                </button>
               </li>
             ))}
           </ul>
@@ -135,14 +160,24 @@ const CartPopup = ({ cart, restaurant, user, onCancel }) => {
         )}
 
         {cart.length > 0 && (
-          <>
-            <p>Dostava: {delivery} RSD</p>
-            <h3>Ukupno: {finalTotal.toFixed(2)} RSD</h3>
-          </>
+          <div className="cart-summary">
+            <div className="cart-row cart-row--muted">
+              <span>Međuosnova</span>
+              <span>{total.toFixed(2)} RSD</span>
+            </div>
+            <div className="cart-row cart-row--muted">
+              <span>Dostava</span>
+              <span>{delivery.toFixed(2)} RSD</span>
+            </div>
+            <div className="cart-total">
+              <span>Ukupno</span>
+              <span>{finalTotal.toFixed(2)} RSD</span>
+            </div>
+          </div>
         )}
 
         <div className="cart-actions">
-          <button className="btn btn-delete" onClick={onCancel}>
+          <button className="btn btn-delete" onClick={handleClose}>
             Otkaži
           </button>
           <button

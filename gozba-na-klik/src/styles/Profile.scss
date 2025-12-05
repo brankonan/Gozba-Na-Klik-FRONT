@@ -1,0 +1,330 @@
+/* === Profile page (edit profil + alergeni) === */
+
+.profile-page {
+  padding: 32px 16px 48px;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-page__inner {
+  width: 100%;
+  max-width: 640px;
+}
+
+/* Glavna kartica profila */
+
+.profile-card {
+  background: radial-gradient(circle at top left, #111827 0, #020617 60%);
+  border-radius: 18px;
+  border: 1px solid #253044;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
+}
+
+/* Header kartice */
+
+.profile-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.profile-card__title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #e5e7eb;
+}
+
+.profile-card__subtitle {
+  font-size: 0.9rem;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+/* Badge za rolu */
+
+.profile-card__role-badge {
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  background: rgba(15, 23, 42, 0.95);
+  color: #e5e7eb;
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.8);
+}
+
+/* Forma */
+
+.profile-form__body {
+  margin-top: 8px;
+}
+
+.profile-form__avatar-row {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 8px;
+}
+
+.profile-form__grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+@media (min-width: 640px) {
+  .profile-form__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .profile-form__field--full {
+    grid-column: 1 / -1;
+  }
+}
+
+.profile-form__field {
+  display: grid;
+  gap: 4px;
+}
+
+/* Footer */
+
+.profile-form__footer {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Sekcije unutar forme (alergeni itd.) */
+
+.profile-section {
+  margin-top: 12px;
+  display: grid;
+  gap: 6px;
+}
+
+.profile-section__header {
+  display: grid;
+  gap: 2px;
+}
+
+.profile-section__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e5e7eb;
+  margin: 0;
+}
+
+.profile-section__hint {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+/* Alergeni – edit mod (checkbox pill-ovi) */
+
+.profile-allergens {
+  margin-top: 4px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+}
+
+.profile-allergens__item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid #253044;
+  font-size: 0.85rem;
+  color: #e5e7eb;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease,
+    box-shadow 0.18s ease, transform 0.12s ease;
+}
+
+.profile-allergens__item:hover {
+  border-color: rgba(92, 255, 141, 0.5);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.9);
+  transform: translateY(-1px);
+}
+
+/* Sam checkbox – minimalistički */
+
+.profile-allergens__checkbox {
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+  border: 1px solid #4b5563;
+  background: #020617;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.profile-allergens__checkbox:checked {
+  border-color: #22c55e;
+  background: radial-gradient(
+    circle at center,
+    #22c55e 0,
+    #16a34a 60%,
+    #022c22 100%
+  );
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.35);
+}
+
+.profile-allergens__checkbox:checked::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 3px;
+  background: #ecfdf5;
+}
+
+.profile-allergens__pill-label {
+  font-size: 0.85rem;
+}
+
+/* Alergeni – pregled (komponenta Allergens) */
+
+.profile-allergens-view {
+  margin-top: 4px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(10, 16, 28, 0.9);
+  border: 1px solid rgba(37, 48, 68, 0.9);
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.9);
+  font-size: 0.9rem;
+}
+
+.profile-avatar-block {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 12px 0;
+}
+
+.profile-avatar-block__content {
+  display: grid;
+  gap: 8px;
+}
+
+/* === Profile avatar blok === */
+
+.profile-avatar-block {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 16px 18px 20px;
+  margin-bottom: 8px;
+  border-radius: 14px;
+  background: radial-gradient(circle at top left, #020617 0, #020617 45%);
+  border: 1px solid rgba(37, 48, 68, 0.85);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.65);
+}
+
+.profile-avatar-block__avatar {
+  flex-shrink: 0;
+}
+
+.profile-avatar-block__content {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.profile-avatar-block__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e5e7eb;
+  margin: 0;
+}
+
+.profile-avatar-block__subtitle {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* red sa fajlom */
+
+.profile-avatar-block__upload-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.profile-avatar-block__file-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: #0f172a;
+  border: 1px solid #253044;
+  color: #e5e7eb;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease,
+    box-shadow 0.18s ease;
+
+  &:hover {
+    background: #0b1220;
+    border-color: #22c55e;
+    box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.25);
+  }
+
+  input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+}
+
+.profile-avatar-block__file-name {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  min-width: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+/* dugmad */
+
+.profile-avatar-block__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* responzivno */
+
+@media (max-width: 600px) {
+  .profile-avatar-block {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-avatar-block__upload-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-avatar-block__file-name {
+    white-space: normal;
+  }
+}

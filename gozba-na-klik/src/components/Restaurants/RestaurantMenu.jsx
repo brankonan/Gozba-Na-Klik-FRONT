@@ -1,9 +1,8 @@
 import React from "react";
 import "../../styles/MenuItemCard.scss";
-
+import "../../styles/Restaurant.scss";
 
 const RestaurantMenu = ({ menu, role, onEdit, onDelete, onAddToCart }) => {
-  
   if (!menu || menu.length === 0) return <p>Nema jela u meniju.</p>;
 
   const isOwner = role === "owner";
@@ -21,13 +20,28 @@ const RestaurantMenu = ({ menu, role, onEdit, onDelete, onAddToCart }) => {
           <div className="actions">
             {isOwner && (
               <>
-                <button className="btn btn-edit" onClick={() => onEdit?.(item.id)}>Izmeni</button>
-                <button className="btn btn-delete" onClick={() => onDelete?.(item.id)}>Obrisi</button>
+                <button
+                  className="btn btn-edit"
+                  onClick={() => onEdit?.(item.id)}
+                >
+                  Izmeni
+                </button>
+                <button
+                  className="btn btn-delete"
+                  onClick={() => onDelete?.(item.id)}
+                >
+                  Obrisi
+                </button>
               </>
             )}
 
             {isCustomer && (
-              <button className="btn btn-primary" onClick={() => onAddToCart?.(item)}>Dodaj u korpu</button>
+              <button
+                className="btn btn-primary"
+                onClick={() => onAddToCart?.(item)}
+              >
+                Dodaj u korpu
+              </button>
             )}
           </div>
         </div>

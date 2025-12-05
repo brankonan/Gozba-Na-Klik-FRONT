@@ -35,7 +35,7 @@ export default function Navbar() {
         {/* Logo – klik vodi na početnu */}
         <button className="logo" type="button" onClick={() => navigate("/")}>
           <span className="logo__dot" />
-          <span className="logo__text">Gozba na klik</span>
+          <span className="logo__text">Gozba na Klik</span>
         </button>
 
         {/* Linkovi po ulozi */}

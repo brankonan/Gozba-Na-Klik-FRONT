@@ -1,22 +1,16 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { uploadUserPhoto, deleteUserPhoto } from "../../api/userService";
-import "../../styles/index.scss";
 import UserAvatar from "../shared/UserAvatar";
 
-
 const UploadPhoto = () => {
-    const [file, setFile] = useState(null);
-    const [busy, setBusy] = useState(false);
-
-    const previewUrl = useMemo(
-        () => (file ? URL.createObjectURL(file) : null),
-        [file]
-    );
-      const { id } = useParams();
+  const { id } = useParams();
   const userId = Number(id);
 
-  // ucitavanje usera iz localstorage-a (login ga cuva)
+  const [file, setFile] = useState(null);
+  const [busy, setBusy] = useState(false);
+
+  // korisnik iz localStorage-a
   const [user, setUser] = useState(() => {
     try {
       const raw = localStorage.getItem("user");
@@ -26,118 +20,123 @@ const UploadPhoto = () => {
     }
   });
 
+  const previewUrl = useMemo(
+    () => (file ? URL.createObjectURL(file) : null),
+    [file]
+  );
 
-    function onPick(e) {
-        const f = e.target.files?.[0];
-        if (!f) return;
-        if (!["image/jpeg", "image/png"].includes(f.type)) {
-            alert("Dozvoljeno: .jpg ili .png");
-            return;
-        }
-        setFile(f);
+  function onPick(e) {
+    const f = e.target.files?.[0];
+    if (!f) return;
+
+    if (!["image/jpeg", "image/png"].includes(f.type)) {
+      alert("Dozvoljeno je uploadovati .jpg ili .png fajl.");
+      return;
     }
+    setFile(f);
+  }
 
-    async function onUpload() {
-        if (!file) return;
-        setBusy(true);
-        try {
-            const { avatarUrl } = await uploadUserPhoto(userId, file);
+  async function onUpload() {
+    if (!file) return;
+    setBusy(true);
+    try {
+      const { avatarUrl } = await uploadUserPhoto(userId, file);
 
-            //osveziti localstorage
-            const updated = { ...(user || {}), profilePicture: avatarUrl };
-            localStorage.setItem("user", JSON.stringify(updated));
+      const updated = { ...(user || {}), profilePicture: avatarUrl };
+      localStorage.setItem("user", JSON.stringify(updated));
+      setUser(updated);
+      setFile(null);
 
-            setUser(updated);
-            setFile(null);
-            alert("Prifilna slika uspesno sacuvana.");
-            window.location.reload();
-        } catch (e) {
-            alert("Greska pri slanju slike.");
-            console.error(e);
-        } finally {
-            setBusy(false);
-        }
+      alert("Profilna slika uspešno sačuvana.");
+      window.location.reload();
+    } catch (e) {
+      console.error(e);
+      alert("Greška pri slanju slike.");
+    } finally {
+      setBusy(false);
     }
+  }
 
-    async function onDelete() {
-        if (!confirm("Ukloniti profilnu sliku?")) return;
-        setBusy(true);
-        try {
-            await deleteUserPhoto(userId);
-            const updated = { ...(user || {}), profilePicture: null };
-            localStorage.setItem("user", JSON.stringify(updated));
-            setUser(updated);
-            setFile(null);
-            alert("Prfilna slika uklonjena");
-            window.location.reload();
-        } catch (e) {
-            alert("Greska pri uklanjanju.");
-            console.error(e);
-        } finally {
-            setBusy(false);
-        }
+  async function onDelete() {
+    if (!window.confirm("Ukloniti profilnu sliku?")) return;
+    setBusy(true);
+    try {
+      await deleteUserPhoto(userId);
+
+      const updated = { ...(user || {}), profilePicture: null };
+      localStorage.setItem("user", JSON.stringify(updated));
+      setUser(updated);
+      setFile(null);
+
+      alert("Profilna slika uklonjena.");
+      window.location.reload();
+    } catch (e) {
+      console.error(e);
+      alert("Greška pri uklanjanju slike.");
+    } finally {
+      setBusy(false);
     }
+  }
 
-    return (
-        <>
-            <header className="navbar">
-                <div className="navbar-inner container" style={{ fontWeight: 800 }}>
-                    Moj profil
-                </div>
-                <UserAvatar />
-            </header>
-            <main className="section">
-                <div className="container" style={{ maxWidth: 680 }}>
-                    <div className="card card-pad stack">
-                        <h2 style={{ margin: 0 }}>Moj Profil</h2>
+  return (
+    <section className="profile-avatar-block">
+      <div className="profile-avatar-block__avatar">
+        <UserAvatar size={120} srcOverride={previewUrl} />
+      </div>
 
-                        <div className="row" style={{ gap: 24, alignItems: "center" }}>
-                            {/* Veliki avatar sa PREVIEW */}
-                            <UserAvatar size={120} srcOverride={previewUrl} />
+      <div className="profile-avatar-block__content">
+        <h3 className="profile-avatar-block__title">Profilna fotografija</h3>
 
-                            <div className="stack">
-                                <input
-                                    type="file"
-                                    accept="image/png,img/jpeg"
-                                    onChange={onPick}
-                                    disabled={busy}
-                                />
-                                {file && (
-                                    <span className="help">
-                                        Pregled je priveremen-klikni Upload da bi sacuvao.
-                                    </span>
-                                )}
+        <div className="profile-avatar-block__upload-row">
+          <label className="profile-avatar-block__file-label">
+            Izaberi fajl
+            <input
+              type="file"
+              accept="image/png,image/jpeg"
+              onChange={onPick}
+              disabled={busy}
+            />
+          </label>
 
-                                <div className="row">
-                                    <button
-                                        className="btn btn-primary"
-                                        onClick={onUpload}
-                                        disabled={!file || busy}
-                                    >
-                                        {busy ? "Slanje..." : "Upload"}
-                                    </button>
-                                    <button
-                                        className="btn btn-outline"
-                                        onClick={() => setFile(null)}
-                                        disabled={!file || busy}
-                                    >
-                                        Otkazi
-                                    </button>
-                                    <button
-                                        className="btn btn-ghost"
-                                        onClick={onDelete}
-                                        disabled={busy || !user?.profilePicture}
-                                    >
-                                        Ukloni fotografiju
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </>
-    );
-}
+          <span className="profile-avatar-block__file-name">
+            {file?.name || "Nijedan fajl nije izabran"}
+          </span>
+        </div>
+
+        {file && (
+          <span className="help">
+            Pregled je privremen – klikni <b>Upload</b> da bi sačuvao sliku.
+          </span>
+        )}
+
+        <div className="profile-avatar-block__buttons">
+          <button
+            className="btn btn--primary"
+            onClick={onUpload}
+            disabled={!file || busy}
+          >
+            {busy ? "Slanje..." : "Upload"}
+          </button>
+
+          <button
+            className="btn btn--outline"
+            onClick={() => setFile(null)}
+            disabled={!file || busy}
+          >
+            Otkaži
+          </button>
+
+          <button
+            className="btn btn--ghost"
+            onClick={onDelete}
+            disabled={busy || !user?.profilePicture}
+          >
+            Ukloni fotografiju
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 export default UploadPhoto;
