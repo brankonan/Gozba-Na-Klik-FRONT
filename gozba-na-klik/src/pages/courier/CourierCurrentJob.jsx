@@ -5,8 +5,9 @@ import {
   deliveredOrder,
 } from "../../api/courierService";
 import { getOrder } from "../../api/orderService";
+import "../../styles/Courier.scss"; // dodaj ovo negde (ovde ili u CourierSchedule)
 
-// Mapiranje statusa kurira na srpski AZ
+// Mapiranje statusa kurira na srpski
 function courierStatusLabel(status) {
   switch (status) {
     case "Active":
@@ -20,7 +21,7 @@ function courierStatusLabel(status) {
   }
 }
 
-// Mapiranje statusa porudžbine na lep srpski AZ
+// Mapiranje statusa porudžbine na lep srpski
 function orderStatusLabel(status) {
   switch (status) {
     case "NA_CEKANJU":
@@ -41,7 +42,7 @@ function orderStatusLabel(status) {
 }
 
 export default function CourierCurrentJob({ userId, onChanged }) {
-  const [status, setStatus] = useState(null); // { status, isBusy, currentOrderId } AZ
+  const [status, setStatus] = useState(null); // { status, isBusy, currentOrderId }
   const [order, setOrder] = useState(null);
   const [busy, setBusy] = useState(false);
 
@@ -53,7 +54,7 @@ export default function CourierCurrentJob({ userId, onChanged }) {
     const normalized = st
       ? {
           ...st,
-          isBusy: st.isBusy ?? !!st.currentOrderId, // fallback ako backend ne vrati isBusy AZ
+          isBusy: st.isBusy ?? !!st.currentOrderId,
         }
       : null;
 
@@ -81,29 +82,20 @@ export default function CourierCurrentJob({ userId, onChanged }) {
 
   const isBusy = !!status?.isBusy;
 
-  const badgeStyle = {
-    padding: "2px 8px",
-    borderRadius: 12,
-    color: "#fff",
-    background:
-      status?.status === "Active"
-        ? "#22c55e"
-        : status?.status === "Suspended"
-        ? "#ef4444"
-        : "#6b7280",
-  };
+  // klase za bedž umesto inline style
+  const badgeClass = [
+    "courier-badge",
+    status?.status === "Active"
+      ? "courier-badge--active"
+      : status?.status === "Suspended"
+      ? "courier-badge--suspended"
+      : "courier-badge--inactive",
+  ].join(" ");
 
-  // Kurir može da potvrdi preuzimanje kad: AZ
-  // - ima porudžbinu
-  // - status porudžbine je PRIHVACENA ili PREUZIMANJE_U_TOKU
-  // (ne uslovljavamo više sa !isBusy, jer backend već rešava da nema više porudžbina)
   const canPickup =
     !!order &&
     (order.status === "PRIHVACENA" || order.status === "PREUZIMANJE_U_TOKU");
 
-  // Kurir može da potvrdi dostavu kad: AZ
-  // - ima porudžbinu
-  // - status porudžbine je DOSTAVA_U_TOKU
   const canDeliver = !!order && order.status === "DOSTAVA_U_TOKU";
 
   async function handlePickup() {
@@ -139,63 +131,74 @@ export default function CourierCurrentJob({ userId, onChanged }) {
   }
 
   return (
-    <div className="card card-pad stack" style={{ gap: 12, marginBottom: 16 }}>
-      <div
-        className="row"
-        style={{ justifyContent: "space-between", alignItems: "center" }}
-      >
-        <h3 style={{ margin: 0 }}>Trenutni zadatak</h3>
-        <span style={badgeStyle}>
+    <section className="card card-pad courier-card courier-current-job">
+      <div className="courier-card__header">
+        <h3 className="courier-card__title">Trenutni zadatak</h3>
+        <span className={badgeClass}>
           {courierStatusLabel(status?.status)}
           {isBusy ? " · U dostavi" : ""}
         </span>
       </div>
 
       {!order ? (
-        <div style={{ opacity: 0.8 }}>Nema dodeljenih porudžbina trenutno.</div>
+        <div className="courier-card__empty">
+          Nema dodeljenih porudžbina trenutno.
+        </div>
       ) : (
         <>
-          <div className="stack" style={{ gap: 6 }}>
-            <div>
-              <b>Porudžbina:</b> #{order.id}
+          <div className="courier-current-job__details">
+            <div className="courier-detail">
+              <span className="courier-detail__label">Porudžbina</span>
+              <span className="courier-detail__value">#{order.id}</span>
             </div>
 
             {order.restaurantName && (
-              <div>
-                <b>Restoran:</b> {order.restaurantName}
+              <div className="courier-detail">
+                <span className="courier-detail__label">Restoran</span>
+                <span className="courier-detail__value">
+                  {order.restaurantName}
+                </span>
               </div>
             )}
 
             {order.deliveryAddress && (
-              <div style={{ opacity: 0.9 }}>
-                <b>Adresa:</b> {order.deliveryAddress.street},{" "}
-                {order.deliveryAddress.city}
-                {order.deliveryAddress.entrance
-                  ? `, ulaz ${order.deliveryAddress.entrance}`
-                  : ""}
-                {order.deliveryAddress.notes
-                  ? ` (${order.deliveryAddress.notes})`
-                  : ""}
+              <div className="courier-detail courier-detail--address">
+                <span className="courier-detail__label">Adresa</span>
+                <span className="courier-detail__value">
+                  {order.deliveryAddress.street}, {order.deliveryAddress.city}
+                  {order.deliveryAddress.entrance
+                    ? `, ulaz ${order.deliveryAddress.entrance}`
+                    : ""}
+                  {order.deliveryAddress.notes
+                    ? ` (${order.deliveryAddress.notes})`
+                    : ""}
+                </span>
               </div>
             )}
 
             {order.total != null && (
-              <div>
-                <b>Ukupno:</b> {Number(order.total).toFixed(2)} RSD
+              <div className="courier-detail">
+                <span className="courier-detail__label">Ukupno</span>
+                <span className="courier-detail__value">
+                  {Number(order.total).toFixed(2)} RSD
+                </span>
               </div>
             )}
 
             {order.status && (
-              <div>
-                <b>Status porudžbine:</b> {orderStatusLabel(order.status)}
+              <div className="courier-detail">
+                <span className="courier-detail__label">Status porudžbine</span>
+                <span className="courier-detail__value">
+                  {orderStatusLabel(order.status)}
+                </span>
               </div>
             )}
           </div>
 
-          <div className="row" style={{ gap: 8 }}>
+          <div className="courier-card__actions">
             {canPickup && (
               <button
-                className="btn btn-primary"
+                className="btn btn--primary"
                 onClick={handlePickup}
                 disabled={busy}
               >
@@ -204,7 +207,11 @@ export default function CourierCurrentJob({ userId, onChanged }) {
             )}
 
             {canDeliver && (
-              <button className="btn" onClick={handleDelivery} disabled={busy}>
+              <button
+                className="btn btn--secondary"
+                onClick={handleDelivery}
+                disabled={busy}
+              >
                 {busy ? "Slanje..." : "Dostavljeno"}
               </button>
             )}
@@ -212,11 +219,15 @@ export default function CourierCurrentJob({ userId, onChanged }) {
         </>
       )}
 
-      <div className="row" style={{ justifyContent: "flex-end" }}>
-        <button className="btn" onClick={refresh} disabled={busy}>
-          Osveži
+      <div className="courier-card__footer">
+        <button
+          className="btn btn--outline btn--sm"
+          onClick={refresh}
+          disabled={busy}
+        >
+          Osveži status
         </button>
       </div>
-    </div>
+    </section>
   );
 }

@@ -18,43 +18,75 @@ function getUser() {
   }
 }
 
-// "8:5" -> "08:05", "08:5" -> "08:05", prazno -> "00:00" AZ
+/// "8:5" -> "08:05", "8" -> "08:00", prazno -> "00:00"
 function hhmm(v) {
   if (!v) return "00:00";
-  const [h, m] = String(v)
-    .split(":")
-    .map((n) => parseInt(n || "0", 10));
-  return `${String(isNaN(h) ? 0 : h).padStart(2, "0")}:${String(
-    isNaN(m) ? 0 : m
-  ).padStart(2, "0")}`;
-}
 
-// "08:00", "12:30" -> 4.5 (sati) AZ
-function hoursBetween(start, end) {
-  const [sh, sm] = start.split(":").map((n) => parseInt(n || "0", 10));
-  const [eh, em] = end.split(":").map((n) => parseInt(n || "0", 10));
-  return eh + (em || 0) / 60 - (sh + (sm || 0) / 60);
-}
+  const str = String(v).trim();
+  let h = 0;
+  let m = 0;
 
-// 1.5 -> "01:30", 0.4 -> "00:24" AZ
-function formatDuration(hours) {
-  const totalMinutes = Math.round(hours * 60);
-  const h = Math.floor(totalMinutes / 60);
-  const m = totalMinutes % 60;
+  if (str.includes(":")) {
+    // ima dvotačku
+    const [hs, ms] = str.split(":");
+    h = parseInt(hs || "0", 10);
+    m = parseInt(ms || "0", 10);
+  } else {
+    // nema dvotačku, izvlači samo cifre
+    const digits = str.replace(/\D/g, "");
+
+    if (digits.length <= 2) {
+      // "8" ili "12" -> sati, minuti 0
+      h = parseInt(digits || "0", 10);
+      m = 0;
+    } else {
+      // poslednje dve cifre su minuti, ostalo sati
+      const mins = digits.slice(-2);
+      const hours = digits.slice(0, -2);
+      h = parseInt(hours || "0", 10);
+      m = parseInt(mins || "0", 10);
+    }
+  }
+
+  if (isNaN(h)) h = 0;
+  if (isNaN(m)) m = 0;
+
+  h = Math.min(23, Math.max(0, h));
+  m = Math.min(59, Math.max(0, m));
 
   return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
 }
+
+// koristi hhmm, pa računa razliku u satima
+function hoursBetween(start, end) {
+  const [sh, sm] = hhmm(start)
+    .split(":")
+    .map((n) => parseInt(n || "0", 10));
+  const [eh, em] = hhmm(end)
+    .split(":")
+    .map((n) => parseInt(n || "0", 10));
+
+  return eh + (em || 0) / 60 - (sh + (sm || 0) / 60);
+}
+// 1.5 -> "01:30"
+function formatDuration(hours) {
+  if (!isFinite(hours) || hours <= 0) return "00:00";
+  const totalMinutes = Math.round(hours * 60);
+  const h = Math.floor(totalMinutes / 60);
+  const m = totalMinutes % 60;
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+}
+
+// 4.5 -> "04:30"
 function formatHoursToHHMM(hours) {
   if (!isFinite(hours) || hours <= 0) return "00:00";
-
-  const totalMinutes = Math.round(hours * 60); // 29.94h -> 1796 min AZ
-  const hh = Math.floor(totalMinutes / 60); // 1796 / 60 -> 29h AZ
-  const mm = totalMinutes % 60; // ostatak -> 56min AZ
-
+  const totalMinutes = Math.round(hours * 60);
+  const hh = Math.floor(totalMinutes / 60);
+  const mm = totalMinutes % 60;
   return `${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`;
 }
 
-// Mapira backend status ("Active", "Inactive", "Suspended") na sprski AZ
+// Mapira backend status na srpski
 function translateStatus(status) {
   switch (status) {
     case "Active":
@@ -88,7 +120,9 @@ export default function CourierSchedule() {
     try {
       const st = await getCourierStatus(userId);
       if (st?.status) setStatus(st.status);
-    } catch {}
+    } catch {
+      /* ignore */
+    }
   }
 
   const weekly = useMemo(
@@ -113,29 +147,27 @@ export default function CourierSchedule() {
             }))
           );
         }
-      } catch (e) {
-        // nema rasporeda jos ili 404 pre ensure-a
+      } catch {
+        // nema rasporeda još
       }
 
-      try {
-        const st = await getCourierStatus(userId);
-        if (st?.status) setStatus(st.status);
-      } catch {}
+      await refreshStatusNow();
     })();
 
-    const t = setInterval(async () => {
-      try {
-        const st = await getCourierStatus(userId);
-        if (st?.status) setStatus(st.status);
-      } catch {}
-    }, 30000);
-
+    const t = setInterval(refreshStatusNow, 30000);
     return () => clearInterval(t);
   }, [userId]);
 
   function setField(i, field, val) {
     setDays((prev) =>
-      prev.map((d, idx) => (idx === i ? { ...d, [field]: hhmm(val) } : d))
+      prev.map((d, idx) => (idx === i ? { ...d, [field]: val } : d))
+    );
+  }
+
+  // poziva se na blur – tek tada formatiramo u HH:MM
+  function normalizeField(i, field) {
+    setDays((prev) =>
+      prev.map((d, idx) => (idx === i ? { ...d, [field]: hhmm(d[field]) } : d))
     );
   }
 
@@ -152,7 +184,7 @@ export default function CourierSchedule() {
     }
     if (weekly > 40)
       return alert(
-        `Nedeljno ${formatDuration(weekly)}h — maksimum je 40:00h nedeljno.`
+        `Nedeljno ${formatHoursToHHMM(weekly)}h — maksimum je 40:00h nedeljno.`
       );
 
     setBusy(true);
@@ -168,88 +200,96 @@ export default function CourierSchedule() {
     }
   }
 
-  const badgeStyle = {
-    padding: "2px 8px",
-    borderRadius: 12,
-    color: "#fff",
-    background:
-      status === "Active"
-        ? "#22c55e"
-        : status === "Suspended"
-        ? "#ef4444"
-        : "#6b7280",
-  };
+  const badgeClass =
+    status === "Active"
+      ? "courier-badge courier-badge--active"
+      : status === "Suspended"
+      ? "courier-badge courier-badge--suspended"
+      : "courier-badge courier-badge--inactive";
 
   return (
-    <main className="section">
-      <div className="container" style={{ maxWidth: 720 }}>
-        <div className="card card-pad stack">
-          <div
-            className="row"
-            style={{ justifyContent: "space-between", alignItems: "center" }}
-          >
-            <h2 style={{ margin: 0 }}>
-              {routeId ? `Raspored kurira #${userId}` : "Moj raspored"}
-            </h2>
-            <span style={badgeStyle}>{translateStatus(status)}</span>
-          </div>
+    <main className="courier-page">
+      <div className="courier-page__inner">
+        {/* LEVO – raspored */}
+        <section className="courier-card card-pad">
+          <header className="courier-card__header">
+            <div>
+              <h2 className="courier-card__title">
+                {routeId ? `Raspored kurira #${userId}` : "Moj raspored"}
+              </h2>
+              <p className="courier-card__subtitle">
+                Podesi svoje radno vreme po danima u nedelji. Sistem koristi ove
+                podatke za dodelu porudžbina.
+              </p>
+            </div>
+            <span className={badgeClass}>{translateStatus(status)}</span>
+          </header>
 
-          <div className="stack" style={{ gap: 12 }}>
+          <div className="courier-schedule__days">
             {days.map((d, i) => (
-              <div
-                key={d.dayOfWeek}
-                className="row"
-                style={{ gap: 12, alignItems: "center" }}
-              >
-                <div style={{ width: 72, fontWeight: 600 }}>
+              <div key={d.dayOfWeek} className="courier-day-row">
+                <div className="courier-day-row__day">
                   {dayNames[d.dayOfWeek]}
                 </div>
 
-                <label className="label">Start</label>
-                <input
-                  type="text"
-                  className="input"
-                  inputMode="numeric"
-                  placeholder="00:00"
-                  value={d.start}
-                  onChange={(e) => setField(i, "start", e.target.value)}
-                />
+                <div className="courier-day-row__field">
+                  <span className="courier-day-row__label">Start</span>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={5}
+                    className="courier-time-input"
+                    placeholder="08:00"
+                    value={d.start}
+                    onChange={(e) => setField(i, "start", e.target.value)}
+                    onBlur={() => normalizeField(i, "start")}
+                    onFocus={(e) => e.target.select()}
+                  />
+                </div>
 
-                <label className="label">Kraj</label>
-                <input
-                  type="text"
-                  className="input"
-                  inputMode="numeric"
-                  placeholder="00:00"
-                  value={d.end}
-                  onChange={(e) => setField(i, "end", e.target.value)}
-                />
+                <div className="courier-day-row__field">
+                  <span className="courier-day-row__label">Kraj</span>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={5}
+                    className="courier-time-input"
+                    placeholder="16:00"
+                    value={d.end}
+                    onChange={(e) => setField(i, "end", e.target.value)}
+                    onBlur={() => normalizeField(i, "end")}
+                    onFocus={(e) => e.target.select()}
+                  />
+                </div>
 
-                <div style={{ marginLeft: "auto", opacity: 0.8 }}>
+                <div className="courier-day-row__summary">
                   {formatDuration(Math.max(0, hoursBetween(d.start, d.end)))}h
                 </div>
               </div>
             ))}
           </div>
 
-          <div
-            className="row"
-            style={{ justifyContent: "space-between", alignItems: "center" }}
-          >
-            <div style={{ fontWeight: 700 }}>
-              Ukupno nedeljno: {formatHoursToHHMM(weekly)} / 40:00h
+          <footer className="courier-card__footer courier-card__footer--schedule">
+            <div className="courier-weekly">
+              Ukupno nedeljno:{" "}
+              <span className="courier-weekly__value">
+                {formatHoursToHHMM(weekly)} / 40:00h
+              </span>
             </div>
             <button
-              className="btn btn-primary"
+              className="btn btn--primary"
               onClick={save}
               disabled={busy || !userId}
             >
-              {busy ? "Čuvanje..." : "Sačuvaj"}
+              {busy ? "Čuvanje..." : "Sačuvaj raspored"}
             </button>
-          </div>
-        </div>
+          </footer>
+        </section>
 
-        <CourierCurrentJob userId={userId} onChanged={refreshStatusNow} />
+        {/* DESNO – trenutni zadatak */}
+        <section className="courier-card card-pad courier-current-job">
+          <CourierCurrentJob userId={userId} onChanged={refreshStatusNow} />
+        </section>
       </div>
     </main>
   );

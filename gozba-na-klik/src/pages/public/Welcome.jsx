@@ -240,7 +240,7 @@ export default function Welcome() {
           {/* Dugme centrirano u sredini kartice */}
           <div className="welcome-page__cta welcome-page__cta--highlight">
             <button
-              className="btn btn--secondary btn--lg"
+              className="btn btn--primary btn--lg"
               onClick={() => navigate("/register")}
             >
               Započni svoju prvu porudžbinu
