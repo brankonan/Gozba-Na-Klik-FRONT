@@ -1,0 +1,85 @@
+.sort-bar {
+    display: flex;
+    gap: 10px;
+}
+
+.sort-select {
+    margin-left: 10px;
+    padding: 4px 8px;
+    font-size: 12px;
+    border: 1px solid #0ae749;
+    border-radius: 6px;
+    background-color: rgba(15, 22, 35, 0.85);
+    cursor: pointer;
+    color: white;
+
+    :hover{
+    background-color: rgba(15, 22, 35, 0.85);
+    }
+}
+
+.sort {
+    background-color: rgba(15, 22, 35, 0.85);
+    border: 1px solid #0ae749;
+    border-radius: 6px;
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+}
+
+.toolbar-toggle {
+    background-color: rgba(15, 22, 35, 0.85);
+    border: 1px solid #0ae749;
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+    width: 100px;
+    color: white;
+
+    &:hover {
+        outline: 2px solid greenyellow;
+    }
+}
+
+.toolbar-row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.toolbar-group {
+    position: relative;
+    display: inline-flex;
+    height: 100%;
+}
+
+.toolbar-popover {
+
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+
+    min-width: 260px;
+    max-width: 420px;
+
+    padding: 16px;
+    border-radius: 10px;
+
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 24px rgba(5, 238, 12, 0.4);
+
+    z-index: 30;
+
+    .restaurant-filters {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        button:hover{
+            outline: 2px solid greenyellow;
+        }
+    }
+}
+
