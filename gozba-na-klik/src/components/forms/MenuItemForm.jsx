@@ -2,47 +2,41 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "../../styles/EditMenuItem.scss";
 
-const MenuItemForm = ({ item, onClose, onSave }) => {
-  const { register, handleSubmit, reset } = useForm({
-    defaultValues: {
-      name: "",
-      description: "",
-      price: 0,
-    },
-  });
+const MenuItemForm = ({ item, onClose, handleSave }) => {
 
-  useEffect(() => {
-    reset(item);
-  }, [item]);
+    const { register, handleSubmit, reset } = useForm({
+        defaultValues: {
+            name: "",
+            description: "",
+            price: 0,
+            photoPath: "",
+        },
+    });
 
-  const onSubmit = (data) => {
-    onSave({ ...item, ...data });
-  };
+    useEffect(() => {
+        reset(item);
+    }, [item, reset]);
 
-  if (!item) return null;
+    const onSubmit = (data) => {
+        handleSave(data);
+    };
 
-  return (
-    <div className="modal-overlay">
-      <div className="modal">
-        <h2>Izmeni jelo</h2>
+    if (!item) return null;
+    const isEdit = !!item.id;
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <label>
-            Naziv:
-            <input
-              className="input"
-              type="text"
-              {...register("name", { required: true })}
-            />
-          </label>
-
-          <label>
-            Opis:
-            <textarea
-              className="input"
-              {...register("description", { required: true })}
-            />
-          </label>
+    return (
+        <div className="modal-overlay">
+            <div className="modal">
+                <h2>{isEdit ? "Izmeni jelo" : "Kreiraj novo jelo"}</h2>
+                
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <label>
+                        Naziv:
+                        <input
+                            className="input"
+                            type="text"
+                            {...register("name", { required: true })} />
+                    </label>
 
           <label>
             Cena (RSD):

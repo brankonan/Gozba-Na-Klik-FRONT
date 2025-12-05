@@ -14,9 +14,6 @@ const RestaurantMenuLoaderCustomer = () => {
   const restaurantMenu = restaurant?.menu || [];
   const user = JSON.parse(localStorage.getItem("user"));
 
-  //KOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-  console.log("EVO GA RESTORAN::: ", restaurant);
-
   useEffect(() => {
     setMenu(restaurantMenu);
   }, []);
@@ -31,11 +28,11 @@ const RestaurantMenuLoaderCustomer = () => {
     setShowCart(false);
   };
 
-
-
   return (
     <div className="menu-page">
-      <h1>Meni restorana: {restaurant?.name}</h1>
+      <div className="menu-header">
+        <h1>{restaurant?.name}</h1>
+      </div>
 
       <RestaurantMenu
         role="customer"

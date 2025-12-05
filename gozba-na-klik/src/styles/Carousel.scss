@@ -27,18 +27,17 @@
 }
 
 .btn-carousel {
-  height: 50px;
+  height: 35px;
   width: 50px;
-  border: 2px solid rgba(34, 197, 94);
+  border: 1px solid #0ae749;
   background-color: rgba(15, 22, 35, 0.849);
-  color: rgba(34, 197, 94);
+  color: #0ae749;
   cursor: pointer;
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   border-radius: 4px;
 
   &:hover {
-    border: 4px solid rgba(34, 197, 94);
-    font-weight: 900;
+    outline: 2px solid greenyellow;
   }
 }
 
@@ -67,7 +66,8 @@
   height: 200px;
   border-radius: 12px;
   overflow: hidden;
-
+  transition: transform .2s, box-shadow .2s;
+  
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 14px rgba(34, 197, 94, .5);
