@@ -10,8 +10,6 @@ const OwnerRestaurants = () => {
   const raw = localStorage.getItem("user");
   const user = raw ? JSON.parse(raw) : null;
 
-
-
   useEffect(() => {
     if (!user) return;
 
@@ -38,10 +36,9 @@ const OwnerRestaurants = () => {
       <main className="section-container">
         {loading ? (
           <p className="loading-state">Ucitavanje...</p>
-        ) :
-          (
-            <RestaurantsGrid restaurants={restaurants} />
-          )}
+        ) : (
+          <RestaurantsGrid restaurants={restaurants} />
+        )}
       </main>
     </div>
   );

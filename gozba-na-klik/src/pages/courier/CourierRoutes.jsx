@@ -1,15 +1,20 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import CourierLayout from "../../layouts/CourierLayout";
 import EditProfile from "../../components/forms/EditProfile/EditProfile";
+import CourierSchedule from "./CourierSchedule";
 
 export default function CourierRoutes() {
-    return (
-        <Routes>
-            <Route element={<CourierLayout />}>
-                <Route path=""></Route>
-                <Route path="profile/:id" element={<EditProfile />}></Route>
-            </Route>
-        </Routes>
-    )
+  return (
+    <Routes>
+      <Route element={<CourierLayout />}>
+        <Route index element={<CourierSchedule />} />
+        <Route path="schedule" element={<CourierSchedule />} />
+        <Route path="schedule/:id" element={<CourierSchedule />} />
+        <Route path="profile/:id" element={<EditProfile />} />
+        {/* fallback da NIKAD ne bude prazan ekran  AZ */}
+        <Route path="*" element={<Navigate to="schedule" replace />} />
+      </Route>
+    </Routes>
+  );
 }

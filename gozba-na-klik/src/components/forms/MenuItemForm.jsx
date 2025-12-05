@@ -38,41 +38,32 @@ const MenuItemForm = ({ item, onClose, handleSave }) => {
                             {...register("name", { required: true })} />
                     </label>
 
-                    <label>
-                        Opis:
-                        <textarea
-                            className="input"
-                            {...register("description", { required: true })}
-                        />
-                    </label>
+          <label>
+            Cena (RSD):
+            <input
+              className="input"
+              type="number"
+              {...register("price", { required: true, min: 1 })}
+            />
+          </label>
 
-                    <label>
-                        Cena (RSD):
-                        <input
-                            className="input"
-                            type="number"
-                            {...register("price", { required: true, min: 1 })}
-                        />
-                    </label>
+          <label>
+            Putanja fotografije:
+            <input className="input" type="text" {...register("photoPath")} />
+          </label>
 
-                    <label>
-                        Putanja fotograije:
-                        <input
-                            className="input"
-                            type="text"
-                            {...register("photoPath")}
-                        />
-                    </label>
-
-
-                    <div className="modal-actions">
-                        <button type="submit" className="btn btn-edit">Sacuvaj</button>
-                        <button type="button" className="btn btn-delete" onClick={onClose}>Otkazi</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    );
+          <div className="modal-actions">
+            <button type="submit" className="btn btn-edit">
+              Sacuvaj
+            </button>
+            <button type="button" className="btn btn-delete" onClick={onClose}>
+              Otkazi
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default MenuItemForm;

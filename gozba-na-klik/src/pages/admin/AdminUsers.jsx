@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { getAllUsers, createUser } from "../../api/adminService";
 import { useNavigate } from "react-router-dom";
+
+import { getAllUsers, createUser } from "../../api/adminService";
+import {
+  getCourierStatus,
+  suspendCourier,
+  unsuspendCourier,
+} from "../../api/courierService";
+
 import "../../styles/index.scss";
 import UserAvatar from "../../components/shared/UserAvatar";
 
-const AdminUsers = () => {
+export default function AdminUsers() {
   const [users, setUsers] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [statusById, setStatusById] = useState({});
+  const [busyId, setBusyId] = useState(null);
   const navigate = useNavigate();
 
   const {
@@ -33,8 +42,47 @@ const AdminUsers = () => {
     try {
       const data = await getAllUsers();
       setUsers(data);
+      await fetchStatuses(data);
     } catch (err) {
       console.error("Error occurred while loading users: ", err);
+    }
+  }
+
+  async function fetchStatuses(list) {
+    try {
+      const couriers = (list || users).filter((u) => u.role === "Courier");
+      const pairs = await Promise.all(
+        couriers.map(async (u) => {
+          try {
+            const s = await getCourierStatus(u.id);
+            return [u.id, s?.status || "-"];
+          } catch {
+            return [u.id, "-"];
+          }
+        })
+      );
+      setStatusById((prev) => ({ ...prev, ...Object.fromEntries(pairs) }));
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async function toggleSuspend(u) {
+    if (u.role !== "Courier") return;
+    setBusyId(u.id);
+    try {
+      if (statusById[u.id] === "Suspended") {
+        await unsuspendCourier(u.id);
+      } else {
+        await suspendCourier(u.id);
+      }
+      const s = await getCourierStatus(u.id);
+      setStatusById((prev) => ({ ...prev, [u.id]: s?.status || "-" }));
+    } catch (err) {
+      console.error(err);
+      alert("Failed to change status.");
+    } finally {
+      setBusyId(null);
     }
   }
 
@@ -46,6 +94,7 @@ const AdminUsers = () => {
       setShowForm(false);
     } catch (err) {
       console.error("Error creating user:", err);
+      alert("Error creating user.");
     }
   };
 
@@ -140,6 +189,7 @@ const AdminUsers = () => {
                 </select>
                 <div className="help">Dodeli osnovnu ulogu</div>
               </div>
+
               <div className="row">
                 <button className="btn btn-primary" type="submit">
                   Save
@@ -155,6 +205,7 @@ const AdminUsers = () => {
             </form>
           </div>
         )}
+
         <section className="stack">
           <h2>Users</h2>
           <div className="table-wrap">
@@ -165,6 +216,8 @@ const AdminUsers = () => {
                   <th>Username</th>
                   <th>E-mail</th>
                   <th>Role</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -176,6 +229,39 @@ const AdminUsers = () => {
                     <td>
                       <span className="badge badge-role">{u.role}</span>
                     </td>
+                    <td>
+                      {u.role === "Courier" ? (
+                        <span className="badge">{statusById[u.id] || "-"}</span>
+                      ) : (
+                        <span className="help" style={{ opacity: 0.8 }}>
+                          -
+                        </span>
+                      )}
+                    </td>
+                    <td>
+                      {u.role === "Courier" ? (
+                        <button
+                          className="btn btn-outline btn-sm"
+                          onClick={() => toggleSuspend(u)}
+                          disabled={busyId === u.id}
+                          title={
+                            statusById[u.id] === "Suspended"
+                              ? "Unsuspend"
+                              : "Suspend"
+                          }
+                        >
+                          {busyId === u.id
+                            ? "..."
+                            : statusById[u.id] === "Suspended"
+                            ? "Unsuspend"
+                            : "Suspend"}
+                        </button>
+                      ) : (
+                        <span className="help" style={{ opacity: 0.8 }}>
+                          -
+                        </span>
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -183,13 +269,10 @@ const AdminUsers = () => {
           </div>
         </section>
       </main>
-       <button
-                className="btn btn-primary btn-sm"
-                onClick={() => navigate("/admin")}>
-                    ← Back
-            </button>
+
+      <button className="btn btn-primary btn-sm" onClick={() => navigate(-1)}>
+        ← Back
+      </button>
     </div>
   );
-};
-
-export default AdminUsers;
+}

@@ -4,7 +4,8 @@
   "description": "",
   "license": "MIT",
   "scripts": {
-    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
     "preview": "vite preview",
     "build": "vite build",
     "dev": "vite"
@@ -16,10 +17,10 @@
     "react-hook-form": "^7.63.0",
     "react-router-dom": "^7.9.2",
     "react-toastify": "^11.0.5",
-    "sass": "^1.93.2",
     "vite-plugin-svgr": "^4.5.0"
   },
   "devDependencies": {
+    "sass": "^1.93.2",
     "sass-embedded": "^1.93.2",
     "vite": "^6.2.0"
   }

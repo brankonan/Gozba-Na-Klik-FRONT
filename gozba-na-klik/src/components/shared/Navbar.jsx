@@ -20,23 +20,24 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-inner container">
-
-        <div className="logo" style={{ fontWeight: 800 }}>Gozba na klik</div>
-
+        <div className="logo" style={{ fontWeight: 800 }}>
+          Gozba na klik
+        </div>
 
         {user && (
           <div className="links-container">
             {user.role === "Admin" && (
               <div className="links">
-                <NavLink  to="/admin/users">KORISNICI</NavLink >
-                <NavLink  to="/admin/restaurants">RESTORANI</NavLink >
-                <NavLink  to={`/admin/profile/${user.id}`}>PROFIL</NavLink >
+                <NavLink to="/admin/users">KORISNICI</NavLink>
+                <NavLink to="/admin/restaurants">RESTORANI</NavLink>
+                <NavLink to={`/admin/profile/${user.id}`}>PROFIL</NavLink>
               </div>
             )}
 
             {user.role === "RestaurantOwner" && (
               <div className="links">
                 <NavLink to="/owner/restaurants">RESTORANI</NavLink>
+                <NavLink to="/owner/orders">PORUDZBINE</NavLink>
                 <NavLink to={`/owner/profile/${user.id}`}>PROFIL</NavLink>
               </div>
             )}
@@ -64,7 +65,6 @@ export default function Navbar() {
               </div>
             )}
           </div>
-
         )}
 
         {!user ? (
@@ -72,16 +72,12 @@ export default function Navbar() {
             <NavLink to="/login">Prijava</NavLink>
             <NavLink to="/register">Registracija</NavLink>
           </div>
-
         ) : (
           <div className="avatar-container">
             <button onClick={onLogout}>Odjava</button>
             <UserAvatar />
           </div>
         )}
-
-
-
       </div>
     </nav>
   );
