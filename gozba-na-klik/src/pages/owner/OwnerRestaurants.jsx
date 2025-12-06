@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAll } from "../../api/ownerRestaurantService";
 import RestaurantsGrid from "../../components/Restaurants/RestaurantsGrid";
 import "../../styles/index.scss";
+import "../../styles/Owner.scss";
 
 const OwnerRestaurants = () => {
   const [restaurants, setRestaurants] = useState([]);

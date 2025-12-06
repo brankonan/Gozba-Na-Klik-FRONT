@@ -5,6 +5,7 @@ import {
   acceptOrder,
   rejectOrder,
 } from "../../../api/orderService";
+import "../../../styles/Owner.scss";
 
 function getCurrentUser() {
   try {

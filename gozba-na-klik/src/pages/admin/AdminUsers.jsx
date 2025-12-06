@@ -11,6 +11,7 @@ import {
 
 import "../../styles/index.scss";
 import UserAvatar from "../../components/shared/UserAvatar";
+import "../../styles/Admin.scss";
 
 export default function AdminUsers() {
   const [users, setUsers] = useState([]);

@@ -394,3 +394,95 @@
     height: 150px;
   }
 }
+
+/* =======================================
+   OWNER – JOŠ VEĆE, “SHOWCASE” KARTICE
+   ======================================= */
+
+.owner-page .restaurants-grid {
+  /* još šire kartice – na većim ekranima staju po 2 u redu */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 32px;
+  margin-top: 36px;
+}
+
+/* glavna kartica restorana – duplo veća od početne verzije */
+.owner-page .restaurant-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+
+  max-width: 580px; /* šira kartica */
+  min-height: 360px; /* znatno viša kartica */
+  margin-inline: auto;
+
+  border-radius: 22px;
+  background: radial-gradient(circle at top left, #111827 0, #020617 80%);
+  border: 1px solid #253044;
+  box-shadow: 0 26px 60px rgba(15, 23, 42, 0.98);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.owner-page .restaurant-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(92, 255, 141, 0.7);
+  box-shadow: 0 30px 70px rgba(15, 23, 42, 1);
+}
+
+/* veća slika gore – skoro kao cover */
+.owner-page .restaurant-card img {
+  width: 100%;
+  height: 260px; /* bilo ~200 → sada dosta veće */
+  object-fit: cover;
+  border-bottom: 1px solid rgba(37, 48, 68, 0.9);
+}
+
+/* sadržaj kartice – više “air”-a */
+.owner-page .restaurant-card .card-content {
+  padding: 18px 22px 20px;
+  display: grid;
+  gap: 10px;
+}
+
+/* naziv restorana – veći i naglašeniji */
+.owner-page .restaurant-card .card-content h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #f9fafb;
+}
+
+/* opis – sada može da “diše” više linija */
+.owner-page .restaurant-card .card-content p {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: #cbd5f5;
+  opacity: 0.93;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 5; /* veća kartica → dozvolimo do 5 linija */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* na manjim ekranima malo prilagođavanje da ne bude previše ogromno */
+
+@media (max-width: 700px) {
+  .owner-page .restaurants-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .owner-page .restaurant-card {
+    max-width: 100%;
+    min-height: 320px;
+  }
+
+  .owner-page .restaurant-card img {
+    height: 230px;
+  }
+}

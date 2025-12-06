@@ -1,0 +1,193 @@
+/* ============================
+   OWNER – GLOBAL LAYOUT & UI
+   ============================ */
+
+/* Glavna owner stranica (OwnerRestaurants) */
+.owner-page {
+  padding-top: 32px;
+}
+
+.owner-page .section-container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+/* Poruke za učitavanje i prazan state */
+.owner-page .loading-state,
+.owner-page .empty-state {
+  text-align: center;
+  padding: 48px 16px;
+  font-size: 0.98rem;
+  color: #9ca3af;
+}
+
+/* Malo naglašavanje naslova na owner ekranima */
+.owner-page h1,
+.owner-page h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e5e7eb;
+}
+
+/* Card i tabela su već globalni, samo ih owner često koristi,
+   pa ostaje zajednički stil iz index.scss (card, table, badge…). */
+
+/* ============================
+   OWNER – MODAL (OwnerEdit)
+   ============================ */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    circle at top,
+    rgba(15, 23, 42, 0.9),
+    rgba(3, 7, 18, 0.98)
+  );
+  display: grid;
+  place-items: center;
+  z-index: 999;
+}
+
+.modal {
+  width: min(760px, 96vw);
+  background: radial-gradient(circle at top left, #020617 0, #020617 80%);
+  border: 1px solid #253044;
+  border-radius: 18px;
+  padding: 18px 18px 20px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.98);
+  backdrop-filter: blur(14px);
+}
+
+.modal__content {
+  display: grid;
+  gap: 18px;
+}
+
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.modal__header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e5e7eb;
+}
+
+/* ============================
+   OWNER – TABS (General / Schedule / Exceptions / Cover)
+   ============================ */
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tab {
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.9);
+  color: #cbd5f5;
+  border: 1px solid #253044;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease,
+    box-shadow 0.18s ease, transform 0.1s ease;
+}
+
+.tab:hover {
+  background: #0b1220;
+  border-color: rgba(148, 163, 184, 0.9);
+}
+
+.tab--active {
+  background: radial-gradient(
+    circle at top,
+    #22c55e 0,
+    #16a34a 40%,
+    #0b1220 100%
+  );
+  border-color: rgba(74, 222, 128, 1);
+  color: #ecfdf5;
+  box-shadow: 0 0 18px rgba(34, 197, 94, 0.4);
+}
+
+/* ============================
+   OWNER – PANEL / FORME U MODALU
+   ============================ */
+
+.panel {
+  padding: 4px 0 2px;
+  display: grid;
+  gap: 12px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* red sa vremenima (Schedule) */
+.time-row {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.time-row input[type="time"] {
+  background: rgba(15, 22, 35, 0.85);
+  color: #e9edf7;
+  border: 1px solid #253044;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+/* ============================
+   OWNER – LISTE (Exceptions, npr.)
+   ============================ */
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.list__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(15, 22, 35, 0.8);
+  border: 1px solid #253044;
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+/* info blokovi (opisi, hintovi, poruke) */
+
+.info {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #253044;
+  background: rgba(12, 19, 32, 0.9);
+  font-size: 0.9rem;
+  color: #e5e7eb;
+}
+
+.info--muted {
+  opacity: 0.85;
+  color: #9ca3af;
+}

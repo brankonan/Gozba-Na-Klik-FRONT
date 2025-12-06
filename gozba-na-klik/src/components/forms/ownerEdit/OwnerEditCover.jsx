@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { uploadRestaurantCover } from "../../../api/ownerService";
+import "../../../styles/Owner.scss";
 
 export default function OwnerEditCover({ restaurantId, ownerId, onUpdated }) {
   const [file, setFile] = useState(null);

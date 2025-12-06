@@ -1,0 +1,114 @@
+/* ======================================
+   ADMIN – LAYOUT + STIL
+   (AdminUsers, AdminRestaurants)
+   ====================================== */
+
+/* Glavni admin "content" – ovo pogađa baš tvoje:
+   <main className="section container"> ... 
+*/
+main.section.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 28px 24px 40px;
+  display: grid;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+/* Header unutar admin sekcije (naslovi "Users", "Restaurants") */
+main.section.container > section.stack > h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e5e7eb;
+  opacity: 0.95;
+}
+
+/* Forma (New User / RestaurantForm) – koristi već postojeću .card, ali je malo "pooštravamo" */
+main.section.container .card.card-pad {
+  border-radius: 18px;
+  background: radial-gradient(circle at top left, #020617 0, #020617 70%);
+  border: 1px solid #253044;
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.96);
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+/* Naslov forme + gornji red u formi (New User / Edit Restaurant) */
+main.section.container .card.card-pad h2,
+main.section.container .card.card-pad h3 {
+  font-size: 1.1rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Malo “air”-a između sekcija u formi */
+main.section.container .card.card-pad .stack {
+  gap: 14px;
+}
+
+/* Tabela (Users, Restaurants) – oslanja se na globalnu .table, samo malo doterivanje */
+main.section.container .table-wrap {
+  margin-top: 4px;
+}
+
+main.section.container .table {
+  background: rgba(15, 22, 35, 0.9);
+  border-radius: 14px;
+  border: 1px solid #253044;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.95);
+}
+
+main.section.container .table thead th,
+main.section.container .table thead td {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9ca3af;
+}
+
+main.section.container .table tbody tr:hover {
+  background: rgba(15, 23, 42, 0.9);
+}
+
+/* Badge za role i status – da izgleda malo više “chip” */
+.badge-role {
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 999px;
+  padding-inline: 10px;
+}
+
+/* Akciona dugmad u tabeli (Edit / Delete / Suspend) – malo kompaktna */
+main.section.container .table tbody td .btn {
+  font-size: 0.82rem;
+  padding: 6px 10px;
+}
+
+/* Globalni helper za .btn-sm (koristiš ga već u JSX-u) */
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border-radius: 999px;
+}
+
+/* Pozicioniranje donjeg “Back” dugmeta da ne visi skroz zalepljeno za levu stranu */
+body > div > .btn.btn-primary.btn-sm {
+  margin: 32px auto 40px;
+  display: block;
+}
+
+/* Sitna responsive prilagodjavanja */
+@media (max-width: 768px) {
+  main.section.container {
+    padding: 20px 12px 32px;
+  }
+
+  main.section.container .table {
+    font-size: 0.85rem;
+  }
+
+  main.section.container .card.card-pad {
+    padding: 14px;
+  }
+}

@@ -4,6 +4,7 @@ import OwnerEditSchedule from "./OwnerEditSchedule";
 import OwnerEditExceptions from "./OwnerEditExceptions";
 import OwnerEditCover from "./OwnerEditCover";
 import "../../../styles/index.scss";
+import "../../../styles/Owner.scss";
 
 export default function OwnerEdit({ restaurant, ownerId, onClose, onUpdated }) {
   const [tab, setTab] = useState("general");
