@@ -3,7 +3,7 @@ import {
   getExceptions,
   addException,
   deleteException,
-} from "../../../api/ownerService";
+} from "../../../api/ownerRestaurantService";
 
 export default function OwnerEditExceptions({
   restaurantId,
@@ -27,7 +27,7 @@ export default function OwnerEditExceptions({
         setLoading(false);
       }
     })();
-  }, [restaurantId, ownerId]);
+  }, [restaurantId]);
 
   function onChange(e) {
     const { name, value } = e.target;
@@ -53,7 +53,7 @@ export default function OwnerEditExceptions({
   async function onDelete(id) {
     try {
       await deleteException(restaurantId, id, ownerId);
-      setExceptions((prev) => prev.filter((x) => (x.id ?? x.date) !== id));
+      setExceptions((prev) => prev.filter((x) => x.id !== id));
       onUpdated && onUpdated();
     } catch (e) {
       console.error(e);

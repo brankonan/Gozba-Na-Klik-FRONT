@@ -18,6 +18,8 @@ import RestaurantMenuLoaderOwner from "./pages/owner/RestaurantMenuLoaderOwner";
 
 import CustomerOrdersPage from "./pages/customer/CustomerOrdersPage";
 
+import OwnerEmployees from "./pages/owner/OwnerEmployees";
+
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
@@ -51,19 +53,16 @@ function App() {
         <Route path="/owner" element={<OwnerLayout />}>
           {/* /owner/restaurants AZ*/}
           <Route path="restaurants" element={<OwnerRestaurants />} />
-
+          <Route path="employees" element={<OwnerEmployees />} />{" "}
           {/* /owner/orders – porudzbine za vlasnikove restorane AZ*/}
           <Route path="orders" element={<OwnerAllOrdersPage />} />
-
           {/* /owner/restaurant/:id/menu AZ*/}
           <Route
             path="restaurant/:id/menu"
             element={<RestaurantMenuLoaderOwner />}
           />
-
           {/* /owner/profile/:id AZ*/}
           <Route path="profile/:id" element={<EditProfile />} />
-
           {/* fallback za owner-a AZ*/}
           <Route path="*" element={<Navigate to="restaurants" replace />} />
         </Route>

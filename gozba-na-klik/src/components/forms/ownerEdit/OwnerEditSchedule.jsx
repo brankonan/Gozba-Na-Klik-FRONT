@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getSchedule, putSchedule } from "../../../api/ownerService";
+import { getSchedule, putSchedule } from "../../../api/ownerRestaurantService";
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -53,7 +53,7 @@ export default function OwnerEditSchedule({
         setLoading(false);
       }
     })();
-  }, [restaurantId, ownerId]);
+  }, [restaurantId]);
 
   function toggleClosed(i) {
     setSchedule((prev) =>

@@ -37,6 +37,7 @@ export default function Navbar() {
             {user.role === "RestaurantOwner" && (
               <div className="links">
                 <NavLink to="/owner/restaurants">RESTORANI</NavLink>
+                <NavLink to="/owner/employees">ZAPOSLENI</NavLink>
                 <NavLink to="/owner/orders">PORUDZBINE</NavLink>
                 <NavLink to={`/owner/profile/${user.id}`}>PROFIL</NavLink>
               </div>

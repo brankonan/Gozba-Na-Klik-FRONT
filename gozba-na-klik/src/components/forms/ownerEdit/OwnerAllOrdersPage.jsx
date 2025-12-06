@@ -4,7 +4,7 @@ import {
   getPendingOrders,
   acceptOrder,
   rejectOrder,
-} from "../../../api/orderService";
+} from "../../../api/ownerRestaurantService";
 
 function getCurrentUser() {
   try {
@@ -75,7 +75,7 @@ export default function OwnerAllOrdersPage() {
     try {
       const restData = await getAll(user.id);
 
-      const pendingData = await getPendingOrders();
+      const pendingData = await getPendingOrders(user.id);
 
       const myRestaurantIds = new Set(restData.map((r) => r.id));
       const myPendingOrders = pendingData.filter((o) =>
@@ -172,7 +172,7 @@ export default function OwnerAllOrdersPage() {
 
           {filteredOrders.length === 0 && !loading ? (
             <div style={{ opacity: 0.8 }}>
-              Trenutno nema pending porudžbina za izabrani restoran.
+              Trenutno nema porudžbina za izabrani restoran.
             </div>
           ) : (
             <div className="table-wrapper">

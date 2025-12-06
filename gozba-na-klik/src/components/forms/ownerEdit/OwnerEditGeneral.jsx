@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { updateRestaurantGeneral } from "../../../api/ownerService";
+import { updateRestaurantGeneral } from "../../../api/ownerRestaurantService";
 
 export default function OwnerEditGeneral({ restaurant, ownerId, onUpdated }) {
   const [gen, setGen] = useState({
@@ -14,7 +14,7 @@ export default function OwnerEditGeneral({ restaurant, ownerId, onUpdated }) {
       name: restaurant?.name || "",
       description: restaurant?.description || "",
       phone: restaurant?.phone || "",
-      capacity: restaurant?.capacity?.toString?.() || "",
+      capacity: restaurant?.capacity?.toString?.() ?? "0",
     });
   }, [restaurant]);
 

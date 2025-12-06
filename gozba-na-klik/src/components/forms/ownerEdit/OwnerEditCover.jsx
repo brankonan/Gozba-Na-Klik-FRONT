@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { uploadRestaurantCover } from "../../../api/ownerService";
+import { uploadRestaurantCover } from "../../../api/ownerRestaurantService";
 
 export default function OwnerEditCover({ restaurantId, ownerId, onUpdated }) {
   const [file, setFile] = useState(null);
@@ -15,6 +15,7 @@ export default function OwnerEditCover({ restaurantId, ownerId, onUpdated }) {
       alert("Izaberi sliku prvo.");
       return;
     }
+    setBusy(true);
     try {
       await uploadRestaurantCover(restaurantId, file, ownerId);
       setFile(null);
